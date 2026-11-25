@@ -1,0 +1,11 @@
+{
+ "page": null,
+ "url": "http://localhost:3123/",
+ "root": null,
+ "kind": "software",
+ "category": "AI mock interviews for SDE freshers",
+ "primary": "Take a free interview",
+ "rounds": 3,
+ "start": "2026-11-25T18:01:46.518Z",
+ "by": "gate.mjs --start"
+}

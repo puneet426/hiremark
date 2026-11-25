@@ -1,0 +1,18 @@
+
+1440x900  lines x 80 and 1360, nav 72px, one screen 900px
+  hero 900 tall; h1 70.56px/1.02, 3 lines, 519x216 at 80,158; lead 20/30, 4 lines, 462 wide; buttons 2 x 44; visual 628x716 at 732,120
+  stress: split h1 at 45 of 45 characters takes 4 lines, hero 900 tall
+  section section.hero.hero--split section.hero.hero--split "Your firs y     0  h   900  content 716
+  section #report section.section "Your report, question by questio"   y   900  h   900  content 708
+  section #interview section.section "An interviewer you can talk to A y  1800  h   900  content 503
+  section #steps section.section.ground-surface "Your first interview  y  2700  h   900  content 575
+  section #rules section.section.ground-surface "Scores kept by code.  y  3600  h   900  content 596
+  section #figures section.section.statement "Campus hiring now tests  y  4500  h   900  content 228
+  section #recruiters section.section "Freshers you can search by inte y  5400  h   900  content 503
+  section #pricing section.section "Interview pricesThe first one is"  y  6300  h   900  content 562
+  section #faq section.section "Questions How your data is kept "      y  7200  h   900  content 599
+  edge-left        #figures p.t-stat.mo-cr "45678901234890123456789012345678": starts at x 1021.8; the lines are 80 and the column starts
+  edge-left        #figures p.t-small.muted "already screen candidates with A": starts at x 1021.8; the lines are 80 and the column starts
+  edge-left        #figures p.t-stat.mo-cr "34567890123.34567890123456789012": starts at x 1202.9; the lines are 80 and the column starts
+  edge-left        #figures p.t-small.muted "median B.Tech pay gap, top-10 in": starts at x 1202.9; the lines are 80 and the column starts
+  hero-lines       section.hero h1: the check fills the h1 to 45 characters (this hero's maxChars in heroes.json), not the page's own: it takes 4 lines at 1440, 3 at most

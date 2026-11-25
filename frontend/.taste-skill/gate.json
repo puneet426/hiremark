@@ -1,0 +1,957 @@
+{
+ "start": "2026-11-25T18:01:46.518Z",
+ "round": 3,
+ "idle": 0,
+ "errors": 0,
+ "status": "open",
+ "history": [
+  {
+   "at": "2026-11-25T18:18:57.637Z",
+   "mode": "manual",
+   "status": "fail",
+   "fails": 30,
+   "round": 1,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-25T18:29:11.522Z",
+   "mode": "manual",
+   "status": "fail",
+   "fails": 29,
+   "round": 2,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-25T18:32:39.122Z",
+   "mode": "manual",
+   "status": "open",
+   "fails": 13,
+   "round": 3,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-25T18:33:10.826Z",
+   "mode": "hook",
+   "host": "claude",
+   "decision": "allow",
+   "reason": "no build is active here",
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-25T18:39:46.180Z",
+   "mode": "hook",
+   "host": "claude",
+   "decision": "allow",
+   "reason": "no build is active here",
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-25T18:48:18.083Z",
+   "mode": "hook",
+   "host": "claude",
+   "decision": "allow",
+   "reason": "no build is active here",
+   "stopHookActive": false
+  }
+ ],
+ "max": 3,
+ "marker": {
+  "page": null,
+  "url": "http://localhost:3123/",
+  "root": null,
+  "kind": "software",
+  "category": "AI mock interviews for SDE freshers",
+  "primary": "Take a free interview",
+  "rounds": 3,
+  "start": "2026-11-25T18:01:46.518Z",
+  "by": "gate.mjs --start"
+ },
+ "manual": true,
+ "roundKey": "dcdf11cf69753431:8d59aa19",
+ "roundFree": false,
+ "idleFree": false,
+ "blockKey": null,
+ "fp": "dcdf11cf69753431",
+ "page": "http://localhost:3123/",
+ "found": {
+  "fails": [
+   {
+    "check": "card-layout",
+    "where": "section#interview",
+    "msg": "one layout (.frame--split) in 3 sections: section#interview, section#recruiters, section#faq; a card layout at most twice",
+    "fix": "a card layout at most twice on a page: build the other sections another way",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "card-layout"
+    ],
+    "wheres": [
+     "section#interview"
+    ]
+   },
+   {
+    "check": "copy-headings",
+    "where": "div.wrap > div.grid > article.card.card--row:nth-of-type(1) > h3.ui-pause-beside \"Score your resume\"",
+    "msg": "\"Score your resume\" names no product, part, place or section (10 headings like it; at most one brand line per page) (and 9 more like it: \"Read your verdict\", \"Scores kept by code. The\", \"Runs hidden tests on you\", \"Logs every warning in th\", ...)",
+    "fix": "name the thing in every heading: the product, a part, the place or a section noun",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "copy-headings"
+    ],
+    "wheres": [
+     "div.wrap > div.grid > article.card.card--row:nth-of-type(1) > h3.ui-pause-beside \"Score your resume\""
+    ]
+   },
+   {
+    "check": "contrast",
+    "where": "ul.ui-notify__list > li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__body \"Checked in your browser, no video stored\"",
+    "msg": "body text over a effect reads at 2.3:1 at its worst tenth (needs 4.5:1), on a busy ground",
+    "fix": "put the text on a calm part of the picture, or on a solid panel",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "contrast"
+    ],
+    "wheres": [
+     "ul.ui-notify__list > li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__body \"Checked in your browser, no video stored\""
+    ]
+   },
+   {
+    "check": "section-air",
+    "where": "section#figures > div.wrap > div.grid.figs \"89012345678678901234567890123456%of orga\"",
+    "msg": "a top border across 100% of the container, between the section's content: sections and their parts are told apart by air and ground, not lines (SR-3)",
+    "fix": "take the rule out: sections and their parts are parted by their ground and the air between them",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-air"
+    ],
+    "wheres": [
+     "section#figures > div.wrap > div.grid.figs \"89012345678678901234567890123456%of orga\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "section#pricing > div.wrap > p.pay > span \"Cards, UPI and netbanking, paid through \"",
+    "msg": "1 text block starts on a left line at x 204, 124px from the container's left: text starts on the container's left, or on one split line (x 623, 732, 841) (SR-6)",
+    "fix": "start the text on the container's left, or on the one split line every split shares",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "section#pricing > div.wrap > p.pay > span \"Cards, UPI and netbanking, paid through \""
+    ]
+   },
+   {
+    "check": "heading-scale",
+    "where": "div.wrap > div.grid.figs > div.span-4:nth-of-type(1) > p.t-stat \"86%\"",
+    "msg": "the figure \"86%\" is set at 40px, larger than the h1 (38.4px) (and 1 more like it: \"48%\")",
+    "fix": "set figures below the h1: a stat reads as data, not as the headline",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "heading-scale"
+    ],
+    "wheres": [
+     "div.wrap > div.grid.figs > div.span-4:nth-of-type(1) > p.t-stat \"86%\""
+    ]
+   },
+   {
+    "check": "off-grid",
+    "where": "div.span-5.stack-6 > div:nth-of-type(1) > div.people > img:nth-of-type(2) \"img: Diksha\"",
+    "msg": "left edge at 48px, 24px off the page margin at 24px (82 elements, like img:nth-of-type(1))",
+    "fix": "move it onto the page margin, or the column edge its section uses",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "off-grid"
+    ],
+    "wheres": [
+     "div.span-5.stack-6 > div:nth-of-type(1) > div.people > img:nth-of-type(2) \"img: Diksha\""
+    ]
+   },
+   {
+    "check": "contrast",
+    "where": "div.share > div.share__body > pre.share__code > span.l:nth-of-type(5) \"lowest = min(lowest, p)\"",
+    "msg": "body text over a effect reads at 1.7:1 at its worst tenth (needs 4.5:1), on a busy ground (and 2 more like it: \"Bullets start with a ver\", \"One face in frame 9m\")",
+    "fix": "put the text on a calm part of the picture, or on a solid panel",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "contrast"
+    ],
+    "wheres": [
+     "div.share > div.share__body > pre.share__code > span.l:nth-of-type(5) \"lowest = min(lowest, p)\""
+    ]
+   },
+   {
+    "check": "contrast",
+    "where": "div.share__body > pre.share__code > span.l:nth-of-type(8) > span.c \"# one pass, O(n) time, O(1) space\"",
+    "msg": "body text over a picture reads at 1.7:1 at its worst tenth (needs 4.5:1), on a busy ground",
+    "fix": "put the text on a calm part of the picture, or on a solid panel",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "contrast"
+    ],
+    "wheres": [
+     "div.share__body > pre.share__code > span.l:nth-of-type(8) > span.c \"# one pass, O(n) time, O(1) space\""
+    ]
+   },
+   {
+    "check": "contrast",
+    "where": "li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__title > time \"9m\"",
+    "msg": "body text over a effect reads at 3.8:1 at its worst tenth (needs 4.5:1)",
+    "fix": "put the text on a calm part of the picture, or on a solid panel",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "contrast"
+    ],
+    "wheres": [
+     "li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__title > time \"9m\""
+    ]
+   },
+   {
+    "check": "section-gaps",
+    "where": "section#interview / section#steps",
+    "msg": "294px between these sections, +85% against the median 159px of gaps at a change of ground",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-gaps"
+    ],
+    "wheres": [
+     "section#interview / section#steps"
+    ]
+   },
+   {
+    "check": "off-viewport",
+    "where": "header.nav > div.wrap.nav__bar > button.nav__toggle",
+    "msg": "at 320px wide it runs 37px past the screen's right edge (cut there: the page clips what runs past it)",
+    "fix": "keep it inside the screen at this width: let it shrink, wrap or stack",
+    "widths": [
+     320
+    ],
+    "from": "consistency",
+    "ids": [
+     "off-viewport"
+    ],
+    "wheres": [
+     "header.nav > div.wrap.nav__bar > button.nav__toggle"
+    ]
+   },
+   {
+    "check": "hero-lines",
+    "where": "section.hero h1",
+    "msg": "the check fills the h1 to 45 characters (this hero's maxChars in heroes.json), not the page's own: it takes 4 lines at 1440, 3 at most",
+    "fix": "the check fills the h1 to this hero's maxChars, not your own: take the next type pairing the deal printed (start.mjs); when the h1 is final and fits, waive it (target: section.hero h1)",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "hero-lines"
+    ],
+    "wheres": [
+     "section.hero h1"
+    ]
+   },
+   {
+    "check": "screen-short",
+    "where": "#recruiters section.section.bg-halo \"Freshers you can search by inter\"",
+    "msg": "838px tall; one screen under the nav is 844px",
+    "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+    "widths": [
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-short",
+     "screen-height"
+    ],
+    "wheres": [
+     "#recruiters section.section.bg-halo \"Freshers you can search by inter\""
+    ]
+   }
+  ],
+  "warns": [
+   {
+    "check": "cut-text",
+    "where": "div.ui.ui-panel > div.ui-stat__head > div.ui-stat__top > span.ui-stat__range \"Attempt 2\"",
+    "msg": "cut 10px at the right by the overflow of div.wrap > div.grid > article.card.card--row:nth-of-type(3) > div.panel: a fragment run out through its panel's edge (and 1 more like it: \"Wrap-up\")",
+    "fix": "give the text room: no overflow clipping a line, no line past its box",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cut-text",
+    "where": "ul.ui-notify__list > li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__body \"Checked in your browser, no video stored\"",
+    "msg": "cut 15px at the bottom by the overflow of div.wrap > div.grid > article.card.card--row:nth-of-type(2) > div.panel: a fragment run out through its panel's edge",
+    "fix": "give the text room: no overflow clipping a line, no line past its box",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cut-text",
+    "where": "p.t-stat.mo-cr > span.mo-cr__col:nth-of-type(1) > span.mo-cr__strip > span:nth-of-type(1) \"8\"",
+    "msg": "cut 19px at the top by the overflow of div.grid.figs > div.span-4:nth-of-type(1) > p.t-stat.mo-cr > span.mo-cr__col:nth-of-type(1) (inside a held section or scroll scene, whose motion --quick does not check) (and 5 more like it: \"6\", \"4\", \"8\", \"3\", ...)",
+    "fix": "give the text room: no overflow clipping a line, no line past its box",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cut-text",
+    "where": "p.t-stat.mo-cr > span.mo-cr__col:nth-of-type(1) > span.mo-cr__strip > span:nth-of-type(2) \"9\"",
+    "msg": "cut 110px at the bottom by the overflow of div.grid.figs > div.span-4:nth-of-type(1) > p.t-stat.mo-cr > span.mo-cr__col:nth-of-type(1) (inside a held section or scroll scene, whose motion --quick does not check) (and 5 more like it: \"7\", \"5\", \"9\", \"4\", ...)",
+    "fix": "give the text room: no overflow clipping a line, no line past its box",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "scroll-reveal",
+    "where": "section#figures > div.wrap > div.grid.figs \"8 9 0 1 2 3 4 5 6 7 8 6 7 8 9 0 1 2 3 4 \"",
+    "msg": "starts an animation (1.4 s) the moment it is scrolled into view (an IntersectionObserver) on span.mo-cr__strip (inside a dealt moment's section, [data-moment]: an enter moment is expected on every kind; its still is judged under reduced motion)",
+    "fix": "show it at rest: no fade, rise or unmask when it is scrolled into view",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "text-only",
+    "where": "section#pricing \"Interview prices\"",
+    "msg": "the section is only text: no picture, icon, mock or effect in it",
+    "fix": "give the section a visual: a photograph that fits, the real icons, or a UI fragment on a ground",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "card-visual",
+    "where": "section#pricing > div.wrap > div.grid \"First interview Once per student Free Si\"",
+    "msg": "3 cards hold only text: no picture, icon, UI fragment or effect in any of them",
+    "fix": "give the cards a visual: an inset panel with a UI fragment, a photograph or real icons",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "same-action",
+    "where": "div.wrap > div.grid > div.span-5.stack-6 > a.link \"Take a free interview\"",
+    "msg": "\"Take a free interview\" is a button in one place and a text link in another: one action in two looks",
+    "fix": "show one action one way: the same button wherever it repeats, or a text link everywhere",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "contrast",
+    "where": "p.t-stat.mo-cr > span.mo-cr__col:nth-of-type(1) > span.mo-cr__strip > span:nth-of-type(7) \"9\"",
+    "msg": "large text over a effect reads at 1.4:1 at its worst tenth (needs 3:1), on a busy ground (inside a held section or scroll scene, whose motion --quick does not check) (and 1 more like it: \"9\")",
+    "fix": "put the text on a calm part of the picture, or on a solid panel",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "text-contrast",
+    "where": "div.ui-win__main > ul.ui-win__rows > li.ui-win__row:nth-of-type(9) > span.ui-avatar \"WR\"",
+    "msg": "9 lines of text in drawn mocks read under 4.5:1 (5 colour pairs), the worst \"WR\" in #ad7b7c on #48373c at 3.13:1",
+    "fix": "lift the mocks' muted text (labels, meta, initials) to 4.5:1 on their own panel, or set it larger",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "main#top > section.hero.hero--split / section#report",
+    "msg": "176px between these sections, -40% against the median 294px",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "section#report / section#interview",
+    "msg": "uneven space at the edge of a band: 215px outside its edge, 72px inside it (the space on either side of a change of ground reads as one gap only when the two match)",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "header.nav > div.wrap.nav__bar > a.nav__logo \"Hiremark\"",
+    "msg": "\"Hiremark\" opens a section headed \"AI mock interviews for SDE freshers\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "div.wrap.nav__bar > nav.nav__links > div.nav__item:nth-of-type(1) > a.nav__link \"Product\"",
+    "msg": "\"Product\" opens a section headed \"Your report, question by question\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "div.nav__menu > div.wrap.grid > div.menu-col.span-3:nth-of-type(1) > a:nth-of-type(1) \"Resume scoreSix checks, out of 100\"",
+    "msg": "\"Resume scoreSix checks, out of 100\" opens a section headed \"Your first interview in 3 steps\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "div.nav__menu > div.wrap.grid > div.menu-col.span-3:nth-of-type(1) > a:nth-of-type(2) \"Setup checkCamera, microphone, full scre\"",
+    "msg": "\"Setup checkCamera, microphone, full scre\" opens a section headed \"Your first interview in 3 steps\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "div.nav__menu > div.wrap.grid > div.menu-col.span-3:nth-of-type(2) > a:nth-of-type(2) \"Scoring rulesHidden tests and a timer\"",
+    "msg": "\"Scoring rulesHidden tests and a timer\" opens a section headed \"Scores kept by code. The AI only asks.\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "div.nav__menu > div.wrap.grid > div.menu-col.span-3:nth-of-type(2) > a:nth-of-type(3) \"Your reportEvery answer, marked\"",
+    "msg": "\"Your reportEvery answer, marked\" opens a section headed \"Your report, question by question\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "div.wrap.nav__bar > nav.nav__links > div.nav__item:nth-of-type(2) > a.nav__link \"Recruiters\"",
+    "msg": "\"Recruiters\" opens a section headed \"Freshers you can search by interview score\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "div.wrap.nav__bar > nav.nav__links > div.nav__item:nth-of-type(3) > a.nav__link \"Pricing\"",
+    "msg": "\"Pricing\" opens a section headed \"Interview prices\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "label-centre",
+    "where": "header.nav > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary \"Take a free interview\"",
+    "msg": "its label sits 18px off-centre (25px of room at the left, 43px at the right) (and 1 more like it: \"Buy the pack\")",
+    "fix": "centre the label in its button, or fill the empty side with an icon",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "fade-cut",
+    "where": "div.ui-win__main > ul.ui-win__rows > li.ui-win__row:nth-of-type(9) > span.ui-win__sub \"Your questions for us\"",
+    "msg": "2 lines of div.ui.ui-panel fade out under its edge (\"Your questions for us\", \"Marked\"): drawn at a fraction of #a3acba on #0a0d14, half-erased",
+    "fix": "fit the mock's rows inside its panel (fewer rows, a taller panel), or end the fade below the last whole row: no row half-erased",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "fade-cut",
+    "where": "div.ui.ui-panel > ul.ui-checks__list > li.ui-check:nth-of-type(6) > span.ui-check__label \"One page for a fresher\"",
+    "msg": "a line of div.ui.ui-panel fades out under its edge (\"One page for a fresher\"): drawn at a fraction of #e9edf3 on #1b1718, half-erased",
+    "fix": "fit the mock's rows inside its panel (fewer rows, a taller panel), or end the fade below the last whole row: no row half-erased",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "fade-cut",
+    "where": "ul.ui-notify__list > li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__title \"One face in frame 9m\"",
+    "msg": "2 lines of div.ui.ui-notify fade out under its edge (\"One face in frame 9m\", \"9m\"): drawn at a fraction of #e9edf3 on #1b1718, half-erased",
+    "fix": "fit the mock's rows inside its panel (fewer rows, a taller panel), or end the fade below the last whole row: no row half-erased",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-length",
+    "where": "section#faq \"Questions\"",
+    "msg": "3 sections over 90 words a screen outside the UI mocks (\"Questions\" 129, \"AI mock interviews for S\" 120, \"Interview prices\" 91); 72 words a screen across the page (647 words in 9 screens): a tech page says it in about 80 or fewer",
+    "fix": "cut every section to its heading, one line and the product UI: the UI says the rest; no second paragraph, no list of feature sentences",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-current",
+    "where": "header.nav",
+    "msg": "the nav stays on screen with 4 links to the page's sections, but never marks the one you are in (no link changes as the page scrolls)",
+    "fix": "mark the link of the section on screen (a colour, a weight or a line under it) as the visitor scrolls",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "button-contrast",
+    "where": "div.hero-text.grid > div.hero__text.span-5 > div.btn-row > a.btn.btn--secondary \"See a sample report\"",
+    "msg": "the button \"See a sample report\" (#181b22) stands only 1.13:1 off the ground around it: it reads as part of the ground, or as switched off",
+    "fix": "give the button a fill that stands at least 1.5:1 off what is around it, or an outline in the ink",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "button-contrast",
+    "where": "div.wrap > div.grid > article.card.card--plan:nth-of-type(1) > a.btn.btn--secondary \"Sign up with your email\"",
+    "msg": "the button \"Sign up with your email\" (#181b22) stands only 1.03:1 off the ground around it: it reads as part of the ground, or as switched off",
+    "fix": "give the button a fill that stands at least 1.5:1 off what is around it, or an outline in the ink",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "button-contrast",
+    "where": "div.wrap > div.grid > article.card.card--plan:nth-of-type(3) > a.btn.btn--secondary \"Buy one interview\"",
+    "msg": "the button \"Buy one interview\" (#181b22) stands only 1.03:1 off the ground around it: it reads as part of the ground, or as switched off",
+    "fix": "give the button a fill that stands at least 1.5:1 off what is around it, or an outline in the ink",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "visual-caption",
+    "where": "div.wrap > div.hero-text.grid > div.hero__media.meet > p.meet__cc \"Diksha: Good. Now, what does your code p\"",
+    "msg": "a muted 14px line of 2 rows sits 10px under the picture diksha-call.svg: it reads as a caption: \"Diksha: Good. Now, what does your code p...\"; no caption or description under any image, render or visual (house rule)",
+    "fix": "take the line away: no caption or description under, over or on any image, render or visual; a licence credit goes in one footer line",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "visual-caption",
+    "where": "div.ui.ui-panel > div.ui-stat__chart > div.ui-stat__axis > span:nth-of-type(1) \"Intro\"",
+    "msg": "a muted 13px line of 1 row sits 8px under the drawing (svg): it reads as a caption: \"Intro\"; no caption or description under any image, render or visual (house rule)",
+    "fix": "take the line away: no caption or description under, over or on any image, render or visual; a licence credit goes in one footer line",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "loop-cycle",
+    "where": "div.grid > div.frame.frame--split > div.stage.stage--fade-b > div.at-rise.to-edge",
+    "msg": "a fragment loop of 1.0 s: under the 2.5-4 s cycle, it reads as blinking",
+    "fix": "set the loop's cycle to 2.5-4 s (--m-cycle) with every keyframe on it, repeating",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "action-repeat",
+    "where": "header.nav > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary:nth-of-type(2) \"take a free interview\"",
+    "msg": "\"take a free interview\" shows 2 times on the first screen at 1440px (nav, hero): the nav's button and the hero's; nothing else on the screen may repeat it",
+    "fix": "show the action once a screen besides the nav's button: the hero's, the close's or the phone bar's, never all at once",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cut-text",
+    "where": "div.ui.ui-panel > ul.ui-checks__list > li.ui-check:nth-of-type(4) > span.ui-check__label \"Bullets start with a verb\"",
+    "msg": "cut 14px at the bottom by the overflow of div.wrap > div.grid > article.card.card--row:nth-of-type(1) > div.panel: a fragment run out through its panel's edge (and 11 more like it: \"From\", \"the\", \"statement,\", \"n\", ...)",
+    "fix": "give the text room: no overflow clipping a line, no line past its box",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cta",
+    "where": "section#steps \"Your first interview in 3 steps\"",
+    "msg": "a section over 1.5 screens long with no link or button in it",
+    "fix": "add the action: a button in the hero, one on every priced item, one in the closing section",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "heading-scale",
+    "where": "div.wrap > div.grid.figs > div.span-4:nth-of-type(1) > p.t-stat \"86%\"",
+    "msg": "figures in 2 sizes, 28, 40px (\"₹399\" at 28px, \"86%\" at 40px)",
+    "fix": "set the page's figures (stats, measures, prices) in one or two sizes",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "section#interview / section#steps",
+    "msg": "uneven space at the edge of a band: 49px outside its edge, 245px inside it (the space on either side of a change of ground reads as one gap only when the two match)",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "fade-cut",
+    "where": "div.app__pane.app__pane--open > div.ui.ui-doc > article.ui-doc__page > div.ui-doc__text:nth-of-type(6) \"Score: 5 of 10. Covered 2 of 4 key point\"",
+    "msg": "a line of div.ui.ui-doc fades out under its edge (\"Score: 5 of 10. Covere\"): drawn at a fraction of #bbbfc6 on #0a0d14, half-erased",
+    "fix": "fit the mock's rows inside its panel (fewer rows, a taller panel), or end the fade below the last whole row: no row half-erased",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "fade-cut",
+    "where": "ul.ui-toggles__list > li.ui-tg:nth-of-type(3) > span.ui-tg__text > span.ui-tg__label \"Hints recorded\"",
+    "msg": "a line of div.ui.ui-panel fades out under its edge (\"Hints recorded\"): drawn at a fraction of #e9edf3 on #1b1718, half-erased",
+    "fix": "fit the mock's rows inside its panel (fewer rows, a taller panel), or end the fade below the last whole row: no row half-erased",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-stat-strip",
+    "msg": "stat strip x1",
+    "fix": "a strip only of figures the brief gives (a price, hours, a count); otherwise put each number in the sentence it proves, or leave it out (references/copy-tells.md)",
+    "widths": [],
+    "from": "copy",
+    "where": "copy x1: \"1 / 1 / 1\"",
+    "exact": false
+   }
+  ],
+  "crashed": [],
+  "seconds": {
+   "consistency": 162,
+   "layout": 4
+  }
+ },
+ "open": [
+  {
+   "check": "card-layout",
+   "where": "section#interview",
+   "msg": "one layout (.frame--split) in 3 sections: section#interview, section#recruiters, section#faq; a card layout at most twice",
+   "fix": "a card layout at most twice on a page: build the other sections another way",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "card-layout"
+   ],
+   "wheres": [
+    "section#interview"
+   ]
+  },
+  {
+   "check": "copy-headings",
+   "where": "div.wrap > div.grid > article.card.card--row:nth-of-type(1) > h3.ui-pause-beside \"Score your resume\"",
+   "msg": "\"Score your resume\" names no product, part, place or section (10 headings like it; at most one brand line per page) (and 9 more like it: \"Read your verdict\", \"Scores kept by code. The\", \"Runs hidden tests on you\", \"Logs every warning in th\", ...)",
+   "fix": "name the thing in every heading: the product, a part, the place or a section noun",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "copy-headings"
+   ],
+   "wheres": [
+    "div.wrap > div.grid > article.card.card--row:nth-of-type(1) > h3.ui-pause-beside \"Score your resume\""
+   ]
+  },
+  {
+   "check": "contrast",
+   "where": "ul.ui-notify__list > li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__body \"Checked in your browser, no video stored\"",
+   "msg": "body text over a effect reads at 2.3:1 at its worst tenth (needs 4.5:1), on a busy ground",
+   "fix": "put the text on a calm part of the picture, or on a solid panel",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "contrast"
+   ],
+   "wheres": [
+    "ul.ui-notify__list > li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__body \"Checked in your browser, no video stored\""
+   ]
+  },
+  {
+   "check": "section-air",
+   "where": "section#figures > div.wrap > div.grid.figs \"89012345678678901234567890123456%of orga\"",
+   "msg": "a top border across 100% of the container, between the section's content: sections and their parts are told apart by air and ground, not lines (SR-3)",
+   "fix": "take the rule out: sections and their parts are parted by their ground and the air between them",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-air"
+   ],
+   "wheres": [
+    "section#figures > div.wrap > div.grid.figs \"89012345678678901234567890123456%of orga\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "section#pricing > div.wrap > p.pay > span \"Cards, UPI and netbanking, paid through \"",
+   "msg": "1 text block starts on a left line at x 204, 124px from the container's left: text starts on the container's left, or on one split line (x 623, 732, 841) (SR-6)",
+   "fix": "start the text on the container's left, or on the one split line every split shares",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "section#pricing > div.wrap > p.pay > span \"Cards, UPI and netbanking, paid through \""
+   ]
+  },
+  {
+   "check": "heading-scale",
+   "where": "div.wrap > div.grid.figs > div.span-4:nth-of-type(1) > p.t-stat \"86%\"",
+   "msg": "the figure \"86%\" is set at 40px, larger than the h1 (38.4px) (and 1 more like it: \"48%\")",
+   "fix": "set figures below the h1: a stat reads as data, not as the headline",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "heading-scale"
+   ],
+   "wheres": [
+    "div.wrap > div.grid.figs > div.span-4:nth-of-type(1) > p.t-stat \"86%\""
+   ]
+  },
+  {
+   "check": "off-grid",
+   "where": "div.span-5.stack-6 > div:nth-of-type(1) > div.people > img:nth-of-type(2) \"img: Diksha\"",
+   "msg": "left edge at 48px, 24px off the page margin at 24px (82 elements, like img:nth-of-type(1))",
+   "fix": "move it onto the page margin, or the column edge its section uses",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "off-grid"
+   ],
+   "wheres": [
+    "div.span-5.stack-6 > div:nth-of-type(1) > div.people > img:nth-of-type(2) \"img: Diksha\""
+   ]
+  },
+  {
+   "check": "contrast",
+   "where": "div.share > div.share__body > pre.share__code > span.l:nth-of-type(5) \"lowest = min(lowest, p)\"",
+   "msg": "body text over a effect reads at 1.7:1 at its worst tenth (needs 4.5:1), on a busy ground (and 2 more like it: \"Bullets start with a ver\", \"One face in frame 9m\")",
+   "fix": "put the text on a calm part of the picture, or on a solid panel",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "contrast"
+   ],
+   "wheres": [
+    "div.share > div.share__body > pre.share__code > span.l:nth-of-type(5) \"lowest = min(lowest, p)\""
+   ]
+  },
+  {
+   "check": "contrast",
+   "where": "div.share__body > pre.share__code > span.l:nth-of-type(8) > span.c \"# one pass, O(n) time, O(1) space\"",
+   "msg": "body text over a picture reads at 1.7:1 at its worst tenth (needs 4.5:1), on a busy ground",
+   "fix": "put the text on a calm part of the picture, or on a solid panel",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "contrast"
+   ],
+   "wheres": [
+    "div.share__body > pre.share__code > span.l:nth-of-type(8) > span.c \"# one pass, O(n) time, O(1) space\""
+   ]
+  },
+  {
+   "check": "contrast",
+   "where": "li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__title > time \"9m\"",
+   "msg": "body text over a effect reads at 3.8:1 at its worst tenth (needs 4.5:1)",
+   "fix": "put the text on a calm part of the picture, or on a solid panel",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "contrast"
+   ],
+   "wheres": [
+    "li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__title > time \"9m\""
+   ]
+  },
+  {
+   "check": "section-gaps",
+   "where": "section#interview / section#steps",
+   "msg": "294px between these sections, +85% against the median 159px of gaps at a change of ground",
+   "fix": "use one gap between sections (all within 25% of each other)",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-gaps"
+   ],
+   "wheres": [
+    "section#interview / section#steps"
+   ]
+  },
+  {
+   "check": "off-viewport",
+   "where": "header.nav > div.wrap.nav__bar > button.nav__toggle",
+   "msg": "at 320px wide it runs 37px past the screen's right edge (cut there: the page clips what runs past it)",
+   "fix": "keep it inside the screen at this width: let it shrink, wrap or stack",
+   "widths": [
+    320
+   ],
+   "from": "consistency",
+   "ids": [
+    "off-viewport"
+   ],
+   "wheres": [
+    "header.nav > div.wrap.nav__bar > button.nav__toggle"
+   ]
+  },
+  {
+   "check": "screen-short",
+   "where": "#recruiters section.section.bg-halo \"Freshers you can search by inter\"",
+   "msg": "838px tall; one screen under the nav is 844px",
+   "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+   "widths": [
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-short",
+    "screen-height"
+   ],
+   "wheres": [
+    "#recruiters section.section.bg-halo \"Freshers you can search by inter\""
+   ]
+  }
+ ],
+ "waived": [
+  {
+   "check": "hero-lines",
+   "where": "section.hero h1",
+   "msg": "the check fills the h1 to 45 characters (this hero's maxChars in heroes.json), not the page's own: it takes 4 lines at 1440, 3 at most",
+   "fix": "the check fills the h1 to this hero's maxChars, not your own: take the next type pairing the deal printed (start.mjs); when the h1 is final and fits, waive it (target: section.hero h1)",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "hero-lines"
+   ],
+   "wheres": [
+    "section.hero h1"
+   ],
+   "reason": "the h1 is final, 34 characters, and sits on three lines at 1440; the check fills it to 45"
+  }
+ ],
+ "warnCount": 40,
+ "at": "2026-11-25T18:32:39.123Z",
+ "openTold": true
+}

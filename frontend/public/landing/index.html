@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en" data-type="software" data-radius="soft" data-buttons="pill" data-ground="sky" data-motion>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hiremark: AI mock interviews for SDE freshers</title>
+<meta name="description" content="A 40-minute interview on a live call, built from your resume: one coding problem, your projects and core CS. Your first one is free.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hiremark: AI mock interviews for SDE freshers">
+<meta property="og:description" content="A 40-minute interview on a live call, built from your resume. Your first one is free.">
+<meta property="og:image" content="/landing/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/landing/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0d14" media="(prefers-color-scheme: dark)">
+<meta name="site-kind" content="software">
+<meta name="page-type" content="software">
+<link rel="preload" href="/landing/fonts/mona-sans-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/landing/fonts/mona-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/landing/assets/system.css">
+<link rel="stylesheet" href="/landing/assets/ui/cards.css">
+<link rel="stylesheet" href="/landing/assets/motion/motion.css">
+<link rel="stylesheet" href="/landing/assets/backgrounds/backgrounds.css">
+<link rel="stylesheet" href="/landing/assets/layout/layout.css">
+<link rel="stylesheet" href="/landing/assets/icons/icon.css">
+<style>
+/* Mona Sans + Geist Mono (start.mjs types: mona), served from this site: the CSP allows no font host */
+@font-face { font-family: "Mona Sans"; font-weight: 400; font-display: swap; src: url(/landing/fonts/mona-sans-400.woff2) format("woff2"); }
+@font-face { font-family: "Mona Sans"; font-weight: 500; font-display: swap; src: url(/landing/fonts/mona-sans-500.woff2) format("woff2"); }
+@font-face { font-family: "Geist Mono"; font-weight: 400; font-display: swap; src: url(/landing/fonts/geist-mono-400.woff2) format("woff2"); }
+/* Two themes. Base dealt by start.mjs for an AI product (blue-black-cornflower); light is its daylight twin. */
+:root {
+  --p-bg: #fbfbfa; --p-surface: #f1f3f6; --p-ink: #0b0d12; --p-muted: #4a4f59;
+  --p-accent: #1f6feb; --p-accent-ink: #ffffff; --p-action: #1f6feb; --p-action-ink: #ffffff;
+  --p-inv-bg: #0a0d14; --p-inv-surface: #131824; --p-inv-ink: #e9edf3; --p-inv-muted: #a3acba;
+  --p-inv-accent: #5ab9fc; --p-inv-accent-ink: #0a0d14; --p-inv-action: #5ab9fc; --p-inv-action-ink: #0a0d14;
+  --font-display: "Mona Sans", system-ui, sans-serif;
+  --font-text: "Mona Sans", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display-weight: 500;
+  --display-tracking: -0.03em;
+  --display-tracking-xl: -0.04em;
+  --ly-scale: 0.96;
+  --glow: #1f6feb24; --glow-2: #5ab9fc1f;
+  --ok: #138a52; --warn-c: #b26b00; --rec: #e5484d;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --p-bg: #0a0d14; --p-surface: #131824; --p-ink: #e9edf3; --p-muted: #a3acba;
+  --p-accent: #5ab9fc; --p-accent-ink: #0a0d14; --p-action: #5ab9fc; --p-action-ink: #0a0d14;
+  --p-inv-bg: #fbfbfa; --p-inv-surface: #f1f3f6; --p-inv-ink: #0b0d12; --p-inv-muted: #4a4f59;
+  --p-inv-accent: #1f6feb; --p-inv-accent-ink: #ffffff; --p-inv-action: #1f6feb; --p-inv-action-ink: #ffffff;
+  --glow: #5ab9fc2e; --glow-2: #1f6feb38;
+  --ok: #3ccf8e; --warn-c: #f5b544; --rec: #ff6369;
+  color-scheme: dark;
+}
+</style>
+<link rel="stylesheet" href="/landing/assets/ui/base.css">
+<link rel="stylesheet" href="/landing/assets/ui/voice/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/window/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/doc/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/checklist/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/toggles/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/stat/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/code/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/notify/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/search/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/chat/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/files/fragment.css">
+<script>(function(){var t=null;try{t=localStorage.getItem('hm-theme')}catch(e){}if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';var h=document.documentElement;h.dataset.theme=t;h.dataset.tone=t})()</script>
+<script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
+<script src="/landing/assets/backgrounds/backgrounds.js"></script>
+<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
+<link rel="modulepreload" href="/landing/assets/moments/moments.js">
+<link rel="modulepreload" href="/landing/assets/moments/lib.js">
+<link rel="modulepreload" href="/landing/assets/moments/counter-rolls/moment.js">
+<style>
+/* page CSS: the app-frame recipe (sections-library.md), and one --p-h per card group */
+.app.ui { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); margin-top: var(--s-7); background: var(--u-bg); border: 1px solid var(--u-border); border-radius: var(--u-r); box-shadow: var(--u-shadow); }
+.app > .app__pane { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
+.app > .app__pane + .app__pane { border-left: 1px solid var(--u-line); }
+.app > .app__pane > .ui-panel { width: 100%; border: 0; border-radius: 0; box-shadow: none; }
+.app > .app__pane::after { content: ""; position: absolute; inset: auto 0 0 0; height: 64px; background: linear-gradient(transparent, var(--u-bg)); pointer-events: none; }
+@media (min-width: 1024px) and (max-width: 1279px) { .app.ui { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); } }
+@media (max-width: 1023px) {
+  .app.ui { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+  .app > .app__pane--list { max-height: 252px; }
+  .app > .app__pane--list::after { display: none; }
+  .app .ui-win__side { display: none; }
+  .app .ui-win__body { grid-template-columns: minmax(0, 1fr); }
+  .app > .app__pane + .app__pane { border-left: 0; border-top: 1px solid var(--u-line); }
+}
+@media (max-width: 639px) {
+  .app.ui { grid-template-rows: minmax(0, 1fr); }
+  .app > .app__pane--list { display: none; }
+  .app > .app__pane + .app__pane { border-top: 0; }
+}
+#steps .panel, #rules .panel { --p-h: 336px; }
+.app .ui-doc { width: 100%; padding: 32px 256px 0 32px; }
+.app .ui-doc__note { right: 32px; }
+@media (max-width: 1023px) { .app .ui-doc { padding: 24px 24px 0; } .app .ui-doc__note { display: none; } }
+#figures .stats { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) and (max-width: 1279px) { #steps { --h: 2 } }
+@media (min-width: 640px) and (max-width: 1023px) { #pricing { --h: 2 } }
+
+/* Sections grow with what they hold, so nothing overlaps on a short laptop screen; on a 900px screen
+   each is still exactly one or two screens. */
+/* a section shorter than its screen holds its content in the middle, never a band of empty ground under it */
+main > section.section:not(.g2) > .wrap:not(.grid) { justify-content: center; }
+.card--plan > .badge { justify-self: start; align-self: flex-start; width: max-content; }
+
+/* gradient grounds (the client asked for them): light first, one hue */
+.hero { background:
+  radial-gradient(55% 60% at 80% 30%, var(--glow), transparent 70%),
+  radial-gradient(45% 45% at 0% 0%, var(--glow-2), transparent 75%),
+  var(--bg); }
+#report { background: radial-gradient(70% 55% at 50% 100%, var(--glow), transparent 70%), var(--bg); }
+.ground-surface { background: radial-gradient(60% 50% at 100% 0%, var(--glow-2), transparent 70%), linear-gradient(180deg, var(--bg), color-mix(in oklab, var(--accent) 5%, var(--bg))); }
+#figures { background: radial-gradient(50% 70% at 0% 100%, var(--glow), transparent 70%), var(--bg); }
+.footer--dark { background: radial-gradient(70% 80% at 50% 0%, color-mix(in oklab, var(--p-inv-accent) 22%, var(--bg)), var(--bg) 70%); }
+:root[data-theme="dark"] { --ground-bg: #64748a; --ground-surface: #6e7f96; --ground-ink: #0a0d14; --ground-muted: #1d2633; --ground-accent: #0a0d14; }
+:root[data-theme="dark"] .frame--split { background: radial-gradient(80% 70% at 30% 0%, #8a9bb3, #6e7f96 70%); }
+
+/* the hero call: a meeting screen, the candidate's code shared big, Puneet and you in two small tiles */
+.meet { --m-bg: #0b0e15; --m-tile: #171c27; --m-ink: #eef1f6; --m-muted: #a7b0bf; --m-line: #ffffff1a;
+  display: flex; flex-direction: column; gap: 10px; padding: 14px; color: var(--m-ink);
+  background: radial-gradient(80% 60% at 70% 0%, #1b2740, var(--m-bg) 70%) !important; }
+.meet__top { display: flex; align-items: center; gap: 10px; font: 500 13px/1 var(--font-text); color: var(--m-muted); padding: 2px 2px 0; }
+.meet__rec { width: 8px; height: 8px; border-radius: 50%; background: var(--rec); box-shadow: 0 0 0 4px color-mix(in oklab, var(--rec) 30%, transparent); }
+.meet__sep { width: 1px; height: 12px; background: var(--m-line); }
+.meet__clock { font-family: var(--font-mono); color: var(--m-ink); }
+.meet__top .meet__who { margin-left: auto; }
+.share { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; background: #0f131c; box-shadow: inset 0 0 0 1px var(--m-line); }
+.share__bar { display: flex; align-items: center; gap: 8px; padding: 9px 12px; font: 500 12px/1 var(--font-text); color: var(--m-muted); border-bottom: 1px solid var(--m-line); }
+.share__bar b { color: var(--m-ink); font-weight: 500; }
+.share__lang { margin-left: auto; font-family: var(--font-mono); padding: 3px 8px; border-radius: 6px; background: #ffffff12; color: var(--m-ink); }
+.share__body { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: 0.9fr 1.1fr; }
+.share__q { padding: 14px; border-right: 1px solid var(--m-line); font: 400 13px/1.5 var(--font-text); color: var(--m-muted); overflow: hidden; }
+.share__q .share__title { margin: 0 0 6px; font: 500 15px/1.3 var(--font-text); color: var(--m-ink); }
+.share__q dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; margin: 10px 0 0; font-size: 12px; }
+.share__q dt { color: var(--m-muted); } .share__q dd { margin: 0; color: var(--m-ink); font-family: var(--font-mono); }
+.share__code { margin: 0; padding: 12px 0; font: 400 12.5px/1.7 var(--font-mono); color: #d6dde8; overflow: hidden; counter-reset: ln; }
+.share__code span.l { display: block; padding: 0 12px 0 0; white-space: pre; }
+.share__code span.l::before { counter-increment: ln; content: counter(ln); display: inline-block; width: 30px; margin-right: 10px; text-align: right; color: #7d8799; }
+.share__code span.l.is-on { background: #5ab9fc1a; box-shadow: inset 2px 0 0 #5ab9fc; }
+.share__code .k { color: #ff9e64; } .share__code .f { color: #5ab9fc; } .share__code .n { color: #e6c07b; } .share__code .c { color: #96a0b2; }
+.share__tests { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 9px 12px; border-top: 1px solid var(--m-line); font: 500 12px/1 var(--font-text); }
+.share__tests span { display: inline-flex; align-items: center; gap: 6px; color: #3ccf8e; }
+.share__tests span::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: #3ccf8e center / 10px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m4 8.4 2.6 2.6L12 5.4' fill='none' stroke='%230b0e15' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.share__tests em { font-style: normal; color: var(--m-muted); font-family: var(--font-mono); }
+.meet__tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; height: 132px; flex: 0 0 auto; }
+.meet__tile { position: relative; overflow: hidden; border-radius: 12px; background: var(--m-tile); }
+.meet__tile.is-speaking { box-shadow: 0 0 0 2px #5ab9fc, 0 0 24px -4px #5ab9fc80; }
+.meet__portrait { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; }
+.meet__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+.meet__name { position: absolute; left: 8px; bottom: 8px; padding: 4px 8px; border-radius: 6px; background: #000000b3; font: 500 12px/1.2 var(--font-text); color: #ffffff; }
+.meet__talk { position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 50%; background: #5ab9fc; display: flex; align-items: center; justify-content: center; gap: 2px; }
+.meet__talk i { width: 2.5px; height: 6px; border-radius: 2px; background: #0b0e15; animation: meet-talk 1.1s ease-in-out infinite; }
+.meet__talk i:nth-child(2) { animation-delay: .18s; } .meet__talk i:nth-child(3) { animation-delay: .36s; }
+@keyframes meet-talk { 0%, 100% { height: 5px } 50% { height: 13px } }
+.meet__off { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(60% 80% at 50% 40%, #24314a, var(--m-tile)); }
+.meet__avatar { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: #3a6df0; font: 500 16px/1 var(--font-text); color: #ffffff; }
+.meet__mute { position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: #000000b3; color: #ffffff; }
+.meet__mute svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.meet.is-live .meet__mute { display: none; }
+.meet__level { position: absolute; top: 8px; right: 8px; width: 6px; height: 26px; border-radius: 3px; background: #ffffff26; overflow: hidden; display: none; }
+.meet__level i { position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: #3ccf8e; transition: height 80ms linear; }
+.meet.is-live .meet__level { display: block; }
+.meet__cc { margin: 0; padding: 9px 12px; border-radius: 10px; background: #000000; font: 400 14px/1.45 var(--font-text); color: var(--m-ink); }
+.meet__cc b { font-weight: 500; color: #5ab9fc; }
+.meet__bar { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.meet__btn, .meet__end { width: 44px; height: 44px; border-radius: 50%; display: inline-grid; place-items: center; border: 0; cursor: pointer; transition: background-color .2s, transform .15s; }
+.meet__btn { background: #2a3140; color: var(--m-ink); }
+.meet__btn:hover { background: #374052; } .meet__btn:active { transform: scale(.94); }
+.meet__btn--static { cursor: default; } .meet__btn--static:hover { background: #2a3140; }
+.meet__btn.is-on { background: #5ab9fc; color: #0b0e15; }
+.meet__btn svg, .meet__end svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.meet__btn .i-on { display: none; } .meet__btn[aria-pressed="true"] .i-on { display: block; } .meet__btn[aria-pressed="true"] .i-off { display: none; }
+.meet__btn[aria-pressed="false"]:not(.meet__btn--static) { background: #e5484d; color: #ffffff; }
+.meet__btn[aria-pressed="false"]:not(.meet__btn--static):hover { background: #f05a5f; }
+.meet__end { width: 56px; border-radius: 999px; background: #e5484d; color: #ffffff; cursor: default; }
+.meet__end svg { fill: currentColor; stroke: none; }
+.meet__note { margin: 0; text-align: center; font: 400 12px/1.3 var(--font-text); color: var(--m-muted); }
+@media (max-width: 1279px) { .share__q { display: none; } .share__body { grid-template-columns: 1fr; } }
+@media (max-width: 639px) { .meet { padding: 10px; gap: 8px; } .meet__cc, .meet__note, .meet__top, .share__tests { display: none; } .meet__tiles { height: 96px; } .meet__btn--static { display: none; } .share__code { font-size: 11.5px; } }
+@media (prefers-reduced-motion: reduce) { .meet__talk i { animation: none; height: 8px; } }
+
+/* figures: three large figures across the row, each over its line */
+.figs { margin-top: var(--s-8, 64px); border-top: 1px solid color-mix(in oklab, var(--ink) 14%, transparent); }
+.figs > div { padding-top: var(--s-6, 32px); }
+.figs .t-stat { font: var(--display-weight) clamp(56px, 6.4vw, 104px)/1 var(--font-display); letter-spacing: -0.045em; color: var(--accent); }
+.figs .t-small { margin-top: 12px; max-width: 30ch; }
+@media (max-width: 639px) { .figs > div + div { margin-top: 8px; } .figs .t-stat { font-size: 34px; } }
+
+/* real icons beside a line of text */
+.ic-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.ic-row img { height: 24px; width: auto; }
+.facts li .ic-row { margin-top: 2px; }
+.people { display: flex; flex-wrap: wrap; align-items: center; row-gap: 6px; }
+.people img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--bg); margin-left: -10px; background: var(--surface); }
+.people img:first-child { margin-left: 0; }
+.people + p { margin-top: 10px; }
+.pay { display: flex; align-items: center; gap: 14px; margin-top: var(--s-6, 32px); color: var(--muted); font-size: var(--t-small, 14px); }
+.pay img { height: 22px; width: auto; }
+.ui-note time { color: var(--u-text-2); }
+@media (max-width: 639px) { .ui-search__t { white-space: normal; } }
+@media (max-width: 399px) { .nav__actions > .nav__link { display: none; } .people img { width: 34px; height: 34px; } }
+@media (max-width: 379px) { .nav__actions > .theme-toggle { display: none; } }
+
+
+/* footer: sized by its content (never a fixed screen), so nothing in it can overlap */
+footer.foot { height: auto; min-height: 0; padding: clamp(72px, 9vw, 128px) 0 0; overflow: hidden; }
+footer.foot > .wrap { display: flex; flex-direction: column; height: auto; row-gap: 0; }
+.foot__cta { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px 48px; padding-bottom: clamp(48px, 6vw, 80px); border-bottom: 1px solid color-mix(in oklab, var(--ink) 14%, transparent); }
+.foot__cta h2 { max-width: 16ch; }
+.foot__cta .t-lead { margin-top: 14px; color: var(--muted); }
+.foot__main { padding-top: clamp(44px, 5vw, 64px); }
+.foot__brand { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.foot__brand .footer__lede { max-width: 34ch; color: var(--muted); margin: 0; }
+footer.foot ul.foot__social { display: flex; flex-direction: row; gap: 10px; list-style: none; margin: 4px 0 0; padding: 0; }
+footer.foot .soc { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 999px; color: var(--ink); border: 1px solid color-mix(in oklab, var(--ink) 18%, transparent); transition: background-color .2s, border-color .2s, color .2s, transform .2s; }
+.soc svg { width: 17px; height: 17px; }
+.soc:hover { background: var(--brand); border-color: var(--brand); color: #ffffff; transform: translateY(-2px); }
+.soc:active { transform: translateY(0) scale(.95); }
+.soc:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.foot .footer__col h3 { color: var(--muted); font-weight: 500; }
+.foot .footer__col a { color: var(--ink); }
+.foot__word { margin: clamp(40px, 6vw, 72px) 0 0; font: 500 clamp(88px, 21vw, 320px)/0.78 var(--font-display); letter-spacing: -0.065em; text-align: center; white-space: nowrap;
+  color: transparent; background: linear-gradient(180deg, color-mix(in oklab, var(--ink) 16%, transparent), color-mix(in oklab, var(--ink) 2%, transparent) 85%); -webkit-background-clip: text; background-clip: text; user-select: none; }
+.foot__legal { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; padding: 22px 0 28px; border-top: 1px solid color-mix(in oklab, var(--ink) 14%, transparent); font-size: 13px; color: var(--muted); }
+.foot__legal a { color: var(--muted); } .foot__legal a:hover { color: var(--ink); }
+.foot__note { flex: 1 1 auto; }
+@media (max-width: 1023px) { .foot__main .grid { row-gap: 36px; } .foot__brand { grid-column: 1 / -1; } }
+@media (max-width: 639px) { .foot__cta { align-items: flex-start; } .foot__cta .btn-row { width: 100%; } .foot__word { font-size: 24vw; } }
+
+
+/* the logo: a cut H (two stems with angled cuts, a rising crossbar split off by two gaps), then "iremark" */
+.hm-logo { display: inline-flex; align-items: baseline; font-weight: 500; letter-spacing: -0.03em; line-height: 1; }
+.hm-logo svg { width: 0.7em; height: 0.8em; margin-right: 0.04em; fill: var(--accent); align-self: baseline; transform: translateY(0.035em); overflow: visible; }
+.hm-logo svg .h-bar { fill: var(--ink); transition: transform .3s cubic-bezier(.2,.8,.2,1); }
+a:hover > .hm-logo svg .h-bar, a.hm-logo:hover svg .h-bar { transform: translateY(-1.5px); }
+
+/* theme toggle */
+.theme-toggle { width: 40px; height: 40px; display: inline-grid; place-items: center; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--ink) 16%, transparent); background: transparent; color: var(--ink); cursor: pointer; transition: background-color .2s, transform .2s; }
+.theme-toggle:hover { background: color-mix(in oklab, var(--ink) 7%, transparent); }
+.theme-toggle:active { transform: scale(.94); }
+.theme-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+:root[data-theme="dark"] .theme-toggle__moon, :root:not([data-theme="dark"]) .theme-toggle__sun { display: none; }
+
+/* 3D hover, asked for by the client: the card turns toward the pointer and a light follows it.
+   Pointer devices only; still under reduced motion. */
+[data-tilt] { position: relative; transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transform-style: preserve-3d; transition: transform .5s cubic-bezier(.2,.8,.2,1); will-change: transform; }
+[data-tilt].is-tilting { transition: transform .08s linear; }
+[data-tilt]::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 3; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--ink) 9%, transparent), transparent 60%); }
+[data-tilt].is-tilting::after { opacity: 1; }
+@media (prefers-reduced-motion: reduce), (hover: none) { [data-tilt] { transform: none !important; } [data-tilt]::after { display: none; } }
+@media (max-width: 639px) { #steps .panel, #rules .panel { --p-h: 220px; } }
+</style>
+</head>
+<body>
+<!-- type: software
+     deal: hero split, nav nav-mega (+ a light/dark switch, asked for by the client), close close-word, footer footer-dark (footer-statement dealt; its lit sand
+     ground fights the client's black and white, dealt again), rhythm surface-pairs, buttons pill, mark ring,
+     grounds bg-dusk #report, bg-halo #recruiters (pick.mjs), a monochrome light pool in the hero (client asked for gradients), effect none; 3D tilt on cards (client asked; waived in .taste-skill/waivers.json)
+     palette: blue-black-cornflower (start.mjs deal, first for an AI product) with a daylight twin for the light theme
+     type: mona (Mona Sans, Geist Mono); funnel failed hero-lines, the client found the next ones generic
+     moments: counter-rolls in #figures -->
+
+<header class="nav">
+  <div class="wrap nav__bar">
+    <a class="skip-link" href="#top">Skip to content</a>
+    <a class="nav__logo" href="#top"><span class="hm-logo" role="img" aria-label="Hiremark"><svg viewBox="0 0 28 32" aria-hidden="true" focusable="false"><path d="M2 7.5 9.5 2v28H2z"/><path d="M18.5 2H26v22.5L18.5 30z"/><path d="M11 18.2l6-5.4v5.6l-6 5.4z" class="h-bar"/></svg><span aria-hidden="true">iremark</span></span></a>
+    <nav class="nav__links" aria-label="Main">
+      <div class="nav__item">
+        <a class="nav__link" href="#report">Product <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="nav__menu">
+          <div class="wrap grid">
+            <div class="menu-col span-3">
+              <p class="t-label">Before the call</p>
+              <a href="#steps">Resume score<span>Six checks, out of 100</span></a>
+              <a href="#steps">Setup check<span>Camera, microphone, full screen</span></a>
+            </div>
+            <div class="menu-col span-3">
+              <p class="t-label">The interview</p>
+              <a href="#interview">Live call<span>Talk, code and ask for hints</span></a>
+              <a href="#rules">Scoring rules<span>Hidden tests and a timer</span></a>
+              <a href="#report">Your report<span>Every answer, marked</span></a>
+            </div>
+            <a class="menu-card span-3 start-10" href="/leaderboard">
+              <div class="panel" data-tilt><div class="stage stage--fade-br"><div class="at-corner" style="--ax:24px;--ay:24px">
+                <div class="ui ui-panel ui-stat" data-ui="stat" data-ui-still data-from="74" data-to="82" data-suffix="">
+                  <div class="ui-stat__head"><div class="ui-stat__top"><span class="ui-stat__label">Interview score</span><span class="ui-stat__range">Attempt 2</span></div>
+                  <div class="ui-stat__line"><span class="ui-stat__num" data-stat-num>82</span><span class="ui-chip ui-chip--plain ui-stat__delta">8 pts</span></div></div>
+                </div>
+              </div></div></div>
+              <span class="t-card">Leaderboard</span>
+              <span class="t-small muted">Published results, by score</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="nav__item"><a class="nav__link" href="#recruiters">Recruiters</a></div>
+      <div class="nav__item"><a class="nav__link" href="#pricing">Pricing</a></div>
+      <div class="nav__item"><a class="nav__link" href="#faq">Questions</a></div>
+    </nav>
+    <div class="nav__actions">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" title="Switch theme">
+        <svg class="theme-toggle__sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"/></svg>
+        <svg class="theme-toggle__moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/></svg>
+      </button>
+      <a class="nav__link" href="/login">Sign in</a>
+      <a class="btn btn--primary" href="/signup">Take a free interview</a>
+    </div>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero hero--split" data-enter aria-labelledby="hero-h">
+    <div class="wrap"><div class="hero-text grid hero__grid">
+      <div class="hero__text span-5">
+        <p class="hero__kicker"><span class="dot" aria-hidden="true"></span>Your first interview is free</p>
+        <h1 id="hero-h">AI mock interviews for SDE freshers</h1>
+        <p class="hero__lead">A 40-minute interview on a live call, built from your resume: one coding problem, your own projects and core CS. You get a hire or no-hire verdict the same evening.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/signup">Take a free interview<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+          <a class="btn btn--secondary" href="#report">See a sample report</a>
+        </div>
+      </div>
+      <div class="hero__media meet span-6 start-7" data-tilt data-meet role="group" aria-label="A Hiremark interview call: your code shared on screen, the interviewer Diksha and your camera">
+          <div class="meet__top"><span class="meet__rec" aria-hidden="true"></span><span>Interview, DSA</span><span class="meet__sep" aria-hidden="true"></span><span class="meet__clock" data-meet-clock>14:08</span><span class="meet__who">2 in the call</span></div>
+          <div class="share">
+            <div class="share__bar"><b>You are sharing</b> solution.py<span class="share__lang">Python 3</span></div>
+            <div class="share__body">
+              <div class="share__q">
+                <p class="share__title">Best day to buy and sell</p>
+                <p>Prices for n days. Buy once, sell once on a later day. Print the best profit, or 0.</p>
+                <dl><dt>Input</dt><dd>n, then n prices</dd><dt>Limits</dt><dd>1 ≤ n ≤ 100000</dd></dl>
+              </div>
+<pre class="share__code" aria-hidden="true"><span class="l"><span class="k">def</span> <span class="f">solve</span>(prices):</span><span class="l">    lowest, best = prices[<span class="n">0</span>], <span class="n">0</span></span><span class="l">    <span class="k">for</span> p <span class="k">in</span> prices:</span><span class="l is-on">        best = <span class="f">max</span>(best, p - lowest)</span><span class="l">        lowest = <span class="f">min</span>(lowest, p)</span><span class="l">    <span class="k">return</span> best</span><span class="l"></span><span class="l"><span class="c"># one pass, O(n) time, O(1) space</span></span></pre>
+            </div>
+          </div>
+          <div class="meet__tiles">
+            <div class="meet__tile is-speaking">
+              <img class="meet__portrait" src="/landing/people/diksha-call.svg" alt="Diksha, the interviewer" width="320" height="200">
+              <span class="meet__talk" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="meet__name">Diksha</span>
+            </div>
+            <div class="meet__tile">
+              <video class="meet__video" data-meet-video playsinline muted hidden></video>
+              <div class="meet__off" data-meet-off><span class="meet__avatar" aria-hidden="true">You</span></div>
+              <span class="meet__mute" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 10V6a3 3 0 0 0-5.7-1.3M9 9v2a3 3 0 0 0 4.6 2.5M5.5 11a6.5 6.5 0 0 0 10.4 5.2M12 17.5V21M3.5 3.5l17 17"/></svg></span>
+              <span class="meet__level" aria-hidden="true"><i data-meet-level></i></span>
+              <span class="meet__name">You</span>
+            </div>
+          </div>
+          <p class="meet__cc"><b>Diksha:</b> Good. Now, what does your code print if the prices only fall?</p>
+          <div class="meet__bar">
+            <button class="meet__btn" type="button" data-meet-mic aria-pressed="false" aria-label="Turn on your microphone" title="Microphone">
+              <svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>
+              <svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 10V6a3 3 0 0 0-5.7-1.3M9 9v2a3 3 0 0 0 4.6 2.5M5.5 11a6.5 6.5 0 0 0 10.4 5.2M18.5 11a6.4 6.4 0 0 1-.6 2.7M12 17.5V21M3.5 3.5l17 17"/></svg>
+            </button>
+            <button class="meet__btn" type="button" data-meet-cam aria-pressed="false" aria-label="Turn on your camera" title="Camera">
+              <svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6.5" width="12.5" height="11" rx="2.5"/><path d="m15.5 10.5 5-3v9l-5-3"/></svg>
+              <svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6.5h5a2.5 2.5 0 0 1 2.5 2.5v3.5M15.5 15v.5a2 2 0 0 1-2 2H5.5a2.5 2.5 0 0 1-2.5-2.5V9a2.5 2.5 0 0 1 1.2-2.1M15.5 10.5l5-3v9l-3.2-1.9M3.5 3.5l17 17"/></svg>
+            </button>
+            <span class="meet__btn meet__btn--static is-on" aria-hidden="true" title="Captions"><svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M10.5 10.2a2.2 2.2 0 1 0 0 3.6M16.5 10.2a2.2 2.2 0 1 0 0 3.6"/></svg></span>
+            <span class="meet__btn meet__btn--static" aria-hidden="true" title="Ask for a hint"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg></span>
+            <span class="meet__end" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 14.4c5.1-3.9 12.9-3.9 18 0l-1.6 2.8-3.8-1.3v-2.6a11.3 11.3 0 0 0-7.2 0v2.6l-3.8 1.3z"/></svg></span>
+          </div>
+          <p class="meet__note" data-meet-note>Try your camera and microphone here. Nothing leaves this browser.</p>
+        </div>
+    </div></div>
+  </section>
+
+  <section class="section" id="report" aria-labelledby="report-h">
+    <div class="wrap">
+      <div class="grid">
+        <h2 class="span-5" id="report-h">Your report, question by question</h2>
+        <p class="span-6 start-7 muted">Every question you were asked, with its segment and score. Open one to see what you covered, what you missed and the answer that would have scored full marks. <a class="link" href="/signup">Get your own report</a></p>
+      </div>
+      <div class="ui app fill" role="img" aria-label="A Hiremark report: nine questions on the left, the open answer on the right with the missed point marked" data-ui-pause-host>
+        <div class="app__pane app__pane--list">
+          <div class="ui ui-panel ui-win" data-ui="window" data-open="Marking" data-work="Marking" data-done="Marked">
+            <div class="ui-win__bar">
+              <span class="ui-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="ui-win__crumb">Report <i>/</i> <b>Attempt 2</b></span>
+              <span class="ui-spacer"></span>
+              <span class="ui-win__search" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg><span class="ui-win__ph">Search</span><span class="ui-kbd">/</span></span>
+            </div>
+            <div class="ui-win__body">
+              <nav class="ui-win__side" aria-hidden="true">
+                <span class="ui-win__nav is-on">All<em>9</em></span>
+                <span class="ui-win__nav">DSA<em>3</em></span>
+                <span class="ui-win__nav">Projects<em>2</em></span>
+                <span class="ui-win__nav">Core CS<em>3</em></span>
+                <span class="ui-win__label">Report</span>
+                <span class="ui-win__nav">Transcript</span>
+                <span class="ui-win__nav">Integrity log</span>
+              </nav>
+              <div class="ui-win__main">
+                <div class="ui-win__cols" aria-hidden="true"><span>Part</span><span>Question</span><span>Status</span><span>Score</span></div>
+                <ul class="ui-win__rows">
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="1">DS</span><span class="ui-win__who">DSA</span><span class="ui-win__sub">Best day to buy and sell</span><span class="ui-win__st" data-st>Marking</span><span class="ui-win__age">21/25</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="1">DS</span><span class="ui-win__who">DSA</span><span class="ui-win__sub">Time and space complexity</span><span class="ui-win__st" data-st>Marking</span><span class="ui-win__age">6/10</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="3">PR</span><span class="ui-win__who">Projects</span><span class="ui-win__sub">Why a queue in your chat app</span><span class="ui-win__st is-you" data-st>Missed a point</span><span class="ui-win__age">5/10</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="3">PR</span><span class="ui-win__who">Projects</span><span class="ui-win__sub">What you would change now</span><span class="ui-win__st is-done" data-st>Marked</span><span class="ui-win__age">8/10</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">CS</span><span class="ui-win__who">Core CS</span><span class="ui-win__sub">Process and thread</span><span class="ui-win__st is-done" data-st>Marked</span><span class="ui-win__age">9/10</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">CS</span><span class="ui-win__who">Core CS</span><span class="ui-win__sub">How an index speeds a query</span><span class="ui-win__st is-done" data-st>Marked</span><span class="ui-win__age">7/10</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">CS</span><span class="ui-win__who">Core CS</span><span class="ui-win__sub">TCP or UDP for a video call</span><span class="ui-win__st is-done" data-st>Marked</span><span class="ui-win__age">8/10</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="2">IN</span><span class="ui-win__who">Intro</span><span class="ui-win__sub">Walk me through your resume</span><span class="ui-win__st is-done" data-st>Marked</span><span class="ui-win__age">4/5</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="5">WR</span><span class="ui-win__who">Wrap-up</span><span class="ui-win__sub">Your questions for us</span><span class="ui-win__st is-done" data-st>Marked</span><span class="ui-win__age">4/5</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="app__pane app__pane--open" data-ui-loop>
+          <div class="ui ui-doc" data-ui="doc">
+            <article class="ui-doc__page">
+              <div class="ui-doc__label">Projects, question 3 of 9</div>
+              <div class="ui-doc__title">Why did your chat app use a message queue?</div>
+              <div class="ui-doc__text">Your answer: messages from many users arrive at once, so <mark class="ui-doc__mark is-on">the queue holds them until the server is free</mark> and none are lost when traffic spikes.</div>
+              <div class="ui-doc__text">You said the queue keeps <mark class="ui-doc__mark" data-kind="Missed" data-msg="Say what happens when the worker crashes mid-message." data-where="Key point 3 of 4">messages in order</mark> for each chat room.</div>
+              <div class="ui-doc__text">Best answer: the queue absorbs bursts, keeps order per room, and lets a crashed worker pick the message up again because it is only removed after it is processed.</div>
+              <div class="ui-doc__text">Score: 5 of 10. Covered 2 of 4 key points. No hints used on this question.</div>
+            </article>
+            <aside class="ui-doc__note ui-panel is-on" aria-live="polite">
+              <div class="ui-doc__kind"><span class="ui-doc__dot"></span><span data-doc-kind>Covered</span></div>
+              <div class="ui-doc__msg" data-doc-msg>Key point 1: the queue absorbs bursts of messages.</div>
+              <div class="ui-doc__where" data-doc-where>Key point 1 of 4</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="interview" aria-labelledby="interview-h">
+    <div class="wrap">
+      <div class="grid">
+        <div class="span-5 stack-6">
+          <h2 id="interview-h">Ten interviewers who listen while you code</h2>
+          <p class="t-lead">Ask it to repeat a question, check what the input can be, or think aloud while you code. It answers from the problem statement and will not confirm your approach.</p>
+          <div>
+            <div class="people">
+              <img src="/landing/people/puneet.svg" alt="Puneet Tiwari" width="40" height="40"><img src="/landing/people/diksha.svg" alt="Diksha" width="40" height="40"><img src="/landing/people/trishna.svg" alt="Trishna" width="40" height="40"><img src="/landing/people/ayush.svg" alt="Ayush" width="40" height="40"><img src="/landing/people/sana.svg" alt="Sana" width="40" height="40"><img src="/landing/people/arjun.svg" alt="Arjun" width="40" height="40"><img src="/landing/people/divya.svg" alt="Divya" width="40" height="40"><img src="/landing/people/vikram.svg" alt="Vikram" width="40" height="40"><img src="/landing/people/nisha.svg" alt="Nisha" width="40" height="40"><img src="/landing/people/farhan.svg" alt="Farhan" width="40" height="40">
+            </div>
+            <p class="t-small muted">Each with their own style. Puneet pushes on failure cases; Ayush wants dry runs.</p>
+          </div>
+          <div class="ic-row" aria-label="Languages in the editor"><img src="/landing/assets/icons/python.svg" alt="Python" width="24" height="24"><img src="/landing/assets/icons/c-plusplus.svg" alt="C++" width="22" height="24"><img src="/landing/assets/icons/java.svg" alt="Java" width="18" height="24"><img src="/landing/assets/icons/javascript.svg" alt="JavaScript" width="24" height="24"><span class="t-small muted">Python, C++, Java and JavaScript</span></div>
+          <a class="link" href="/signup">Take a free interview</a>
+        </div>
+        <div class="frame frame--split span-6 start-7" data-tilt>
+          <div class="stage stage--fade-b"><div class="at-rise to-edge fit" style="--fit-max:400px;--ax:max(24px, 50% - 200px);--ay:56px" data-ui-loop>
+            <div class="ui ui-panel ui-chat" data-ui="chat">
+              <div class="ui-head"><span class="ui-agent" aria-hidden="true"></span><div class="ui-title">Diksha, interviewer</div><span class="ui-chat__online">On the call</span><span class="ui-spacer"></span></div>
+              <div class="ui-chat__body">
+                <div class="ui-chat__day">DSA, 14:02 left</div>
+                <div class="ui-msg ui-msg--me" data-chat-q><span class="ui-msg__text">Can the prices array be empty?</span></div>
+                <div class="ui-msg ui-msg--bot" data-chat-a>
+                  <span class="ui-agent ui-msg__av" aria-hidden="true"></span>
+                  <span class="ui-msg__col">
+                    <span class="ui-chat__answer">No. The statement says <b>1 ≤ n ≤ 100000</b>. Do not assume anything it does not say.</span>
+                    <span class="ui-chat__srcs"><span class="ui-chat__src"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M4 2.5h5l3 3v8H4z"/><path d="M9 2.5v3h3"/></svg>Problem statement</span><span class="ui-chat__src"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg>No hint used</span></span>
+                  </span>
+                </div>
+                <div class="ui-msg ui-msg--me"><span class="ui-msg__text">Okay, one pass with the lowest price so far.</span></div>
+              </div>
+              <div class="ui-chat__input"><span class="ui-chat__ph">Speak, or type a message</span><span class="ui-chat__send" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 13V3.5M3.8 7.5 8 3.3l4.2 4.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section ground-surface" id="steps" style="--hm: 2" aria-labelledby="steps-h">
+    <div class="wrap">
+      <div class="section-head"><h2 id="steps-h">Your first interview in 3 steps</h2></div>
+      <div class="grid">
+        <article class="card card--row card--open span-4">
+          <span class="step-num">1</span>
+          <h3>Score your resume</h3>
+          <p>Six fixed checks, out of 100. The interview opens at 60.</p>
+          <div class="panel" data-tilt><div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:340px;--ax:24px;--ay:40px" data-ui-loop>
+            <div class="ui ui-panel ui-checks" data-ui="checklist">
+              <div class="ui-checks__head"><div class="ui-title">Resume checks</div><span class="ui-spacer"></span><div class="ui-meta" data-checks-count>3 of 6</div></div>
+              <div class="ui-checks__bar"><i data-checks-bar style="--k:0.5"></i></div>
+              <ul class="ui-checks__list">
+                <li class="ui-check is-done"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Text a tracker can read</span></li>
+                <li class="ui-check is-done"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Contact details at the top</span></li>
+                <li class="ui-check is-done"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Skills named in projects</span></li>
+                <li class="ui-check"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Bullets start with a verb</span></li>
+                <li class="ui-check"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Results with numbers</span></li>
+                <li class="ui-check"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">One page for a fresher</span></li>
+              </ul>
+            </div>
+          </div></div></div>
+        </article>
+        <article class="card card--row card--open span-4">
+          <span class="step-num">2</span>
+          <h3>Sit the 40-minute call</h3>
+          <p>Camera and microphone on. Talk, code and ask questions out loud.</p>
+          <div class="panel" data-tilt><div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:264px;--ax:max(24px, 50% - 132px);--ay:32px">
+            <div class="ui ui-panel ui-voice" data-ui="voice">
+            <div class="ui-voice__top"><span class="ui-chip ui-chip--ink">Interview, DSA</span><span class="ui-spacer"></span><span class="ui-voice__time" data-voice-time>14:08</span></div>
+            <div class="ui-voice__orb" data-voice-orb></div>
+            <div class="ui-voice__who"><span class="ui-voice__name">Diksha</span><span class="ui-voice__with">Staff engineer, payments</span></div>
+            <div class="ui-voice__cap" data-voice-cap>From the statement, n is at least 1. Do not assume anything it does not say.</div>
+            <div class="ui-voice__bar">
+              <span class="ui-voice__btn" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 16 16"><rect x="6" y="2" width="4" height="8" rx="2"/><path d="M3.5 8a4.5 4.5 0 0 0 9 0M8 12.5V14"/></svg></span>
+              <span class="ui-voice__wave" aria-hidden="true"><i style="--h:4"></i><i style="--h:7"></i><i style="--h:12"></i><i style="--h:9"></i><i style="--h:16"></i><i style="--h:11"></i><i style="--h:20"></i><i style="--h:14"></i><i style="--h:8"></i><i style="--h:17"></i><i style="--h:12"></i><i style="--h:6"></i><i style="--h:10"></i><i style="--h:18"></i><i style="--h:13"></i><i style="--h:7"></i><i style="--h:15"></i><i style="--h:9"></i><i style="--h:5"></i><i style="--h:11"></i><i style="--h:7"></i><i style="--h:4"></i></span>
+              <span class="ui-voice__btn ui-voice__end" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M2.2 9.6c3.4-2.6 8.2-2.6 11.6 0l-1.1 1.9-2.5-.9V8.9a7.5 7.5 0 0 0-4.4 0v1.7l-2.5.9z"/></svg></span>
+            </div>
+          </div>
+          </div></div></div>
+        </article>
+        <article class="card card--row card--open span-4">
+          <span class="step-num">3</span>
+          <h3>Read your verdict</h3>
+          <p>A score, a hire or no-hire verdict and three things to fix first.</p>
+          <div class="panel" data-tilt><div class="stage stage--fade-b"><div class="at-corner" style="--ax:24px;--ay:40px">
+            <div class="ui ui-panel ui-stat" data-ui="stat" data-ui-still data-from="70" data-to="78" data-suffix="">
+              <div class="ui-stat__head">
+                <div class="ui-stat__top"><span class="ui-stat__label">Interview score</span><span class="ui-stat__range">Attempt 2</span></div>
+                <div class="ui-stat__line"><span class="ui-stat__num" data-stat-num>78</span><span class="ui-chip ui-chip--plain ui-stat__delta">8 pts</span><span class="ui-stat__sub">vs. attempt 1</span></div>
+              </div>
+              <div class="ui-stat__chart">
+                <svg class="ui-stat__svg" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="ui-stat__grid" d="M0 30.5H400M0 60.5H400M0 90.5H400"/>
+                  <path class="ui-stat__cover" fill-rule="evenodd" d=""/>
+                  <g class="ui-stat__bars"><rect rx="3" x="0" y="40" width="34" height="80"/><rect rx="3" x="45" y="62" width="34" height="58"/><rect rx="3" x="90" y="70" width="34" height="50"/><rect rx="3" x="135" y="28" width="34" height="92"/><rect rx="3" x="180" y="44" width="34" height="76"/><rect rx="3" x="225" y="36" width="34" height="84"/><rect rx="3" x="270" y="52" width="34" height="68"/><rect rx="3" x="315" y="40" width="34" height="80"/><rect rx="3" x="360" y="30" width="34" height="90"/></g>
+                </svg>
+                <div class="ui-stat__axis" aria-hidden="true"><span>Intro</span><span>Core CS</span><span>Wrap-up</span></div>
+              </div>
+            </div>
+          </div></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section ground-surface" id="rules" aria-labelledby="rules-h">
+    <div class="wrap">
+      <div class="section-head"><h2 id="rules-h">Scores kept by code. <span class="muted">The AI only asks.</span></h2></div>
+      <div class="grid">
+        <article class="card card--row card--open span-6">
+          <h3>Runs hidden tests on your code</h3>
+          <p>Run the samples, then submit against tests you never see. The timer runs on our server.</p>
+          <div class="panel" data-tilt><div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:420px;--ax:max(24px, 50% - 210px);--ay:40px" data-ui-loop>
+            <div class="ui ui-panel ui-toggles" data-ui="toggles">
+              <div class="ui-head"><div class="ui-title">Scoring rules</div><span class="ui-spacer"></span><div class="ui-meta" data-tg-count>4 of 4 on</div></div>
+              <ul class="ui-toggles__list">
+                <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Hidden tests</span><span class="ui-tg__sub">Your code, run against unseen cases</span></span><span class="ui-switch is-on" aria-hidden="true"><i></i></span></li>
+                <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Server timer</span><span class="ui-tg__sub">Every part has its own clock</span></span><span class="ui-switch is-on" aria-hidden="true"><i></i></span></li>
+                <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Hints recorded</span><span class="ui-tg__sub">Each one lowers the score of that part</span></span><span class="ui-switch is-on" aria-hidden="true"><i></i></span></li>
+                <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Key points</span><span class="ui-tg__sub">Spoken answers checked against a fixed list</span></span><span class="ui-switch is-on" aria-hidden="true"><i></i></span></li>
+              </ul>
+            </div>
+          </div></div></div>
+        </article>
+        <article class="card card--row card--open span-6">
+          <h3>Logs every warning in the open</h3>
+          <p>Pasting from outside, tab switches and leaving full screen are logged. Three warnings end the call.</p>
+          <div class="panel" data-tilt><div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:380px;--ax:max(24px, 50% - 190px);--ay:calc(100% - 180px);--ay-sm:calc(100% - 180px)">
+            <div class="ui ui-notify" data-ui="notify" data-ui-still>
+              <ul class="ui-notify__list" data-notify-list>
+                <li class="ui-note"><span class="ui-note__ico"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M8 3v6M8 11.5v.5"/></svg></span><span class="ui-note__text"><span class="ui-note__title">Paste from outside blocked<time>now</time></span><span class="ui-note__body">Warning 1 of 3, saved in your integrity log</span></span></li>
+                <li class="ui-note"><span class="ui-note__ico"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg></span><span class="ui-note__text"><span class="ui-note__title">Hint 1 recorded<time>6m</time></span><span class="ui-note__body">It lowers the DSA score</span></span></li>
+                <li class="ui-note"><span class="ui-note__ico"><svg class="ui-icon" viewBox="0 0 16 16"><path d="m3.5 8.4 2.8 2.8 6.2-6.4"/></svg></span><span class="ui-note__text"><span class="ui-note__title">One face in frame<time>9m</time></span><span class="ui-note__body">Checked in your browser, no video stored</span></span></li>
+              </ul>
+            </div>
+          </div></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section statement" id="figures" aria-labelledby="figures-h">
+    <div class="wrap">
+      <div class="grid">
+        <h2 class="span-6" id="figures-h">Campus hiring now tests skill first</h2>
+        <p class="span-6 start-7 t-lead muted">Coding sites check your code. Nobody asks a follow-up, pushes on complexity or asks you to explain your own project. That is the part Hiremark practises.</p>
+      </div>
+      <div class="grid figs" data-moment="counter-rolls">
+        <div class="span-4"><p class="t-stat">86%</p><p class="t-small muted">of organisations say AI is changing how they hire graduates<sup>1</sup></p></div>
+        <div class="span-4"><p class="t-stat">48%</p><p class="t-small muted">already screen candidates with AI-based tests<sup>1</sup></p></div>
+        <div class="span-4"><p class="t-stat">3.3×</p><p class="t-small muted">median B.Tech pay gap, top-10 institutes against tier-3 colleges<sup>1</sup></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-halo" id="recruiters" aria-labelledby="recruiters-h">
+    <div class="wrap">
+      <div class="grid">
+        <div class="span-5 stack-6">
+          <h2 id="recruiters-h">Freshers you can search by interview score</h2>
+          <p class="t-lead">Filter published results by score, skill, college, graduation year and city. Students approve before any contact detail is shared.</p>
+          <ul class="facts">
+            <li>Recruiter plans from ₹4,999 for 30 days</li>
+            <li>Every retake shown beside the score</li>
+          </ul>
+          <a class="link" href="/signup?role=recruiter">Create a recruiter account</a>
+        </div>
+        <div class="frame frame--split span-6 start-7" data-tilt>
+          <div class="stage stage--fade-b"><div class="at-rise to-edge fit" style="--fit-max:420px;--ax:max(24px, 50% - 210px);--ay:56px" data-ui-loop>
+            <div class="ui ui-panel ui-search" data-ui="search">
+              <div class="ui-search__field">
+                <svg class="ui-icon" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
+                <span class="ui-search__q"><span data-search-q>react, 2027, score 70+</span><i class="ui-search__caret"></i></span>
+                <kbd class="ui-search__kbd">Ctrl K</kbd>
+              </div>
+              <div class="ui-search__group">Published results</div>
+              <ul class="ui-search__list" data-search-list>
+                <li class="ui-search__row is-sel"><span class="ui-search__ico"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="6" r="2.5"/><path d="M3.5 13.5c.6-2.3 2.4-3.5 4.5-3.5s3.9 1.2 4.5 3.5"/></svg></span><span class="ui-search__t">Strong hire, 91, <b>React</b>, <b>2027</b></span><span class="ui-search__m">1 attempt</span></li>
+                <li class="ui-search__row"><span class="ui-search__ico"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="6" r="2.5"/><path d="M3.5 13.5c.6-2.3 2.4-3.5 4.5-3.5s3.9 1.2 4.5 3.5"/></svg></span><span class="ui-search__t">Hire, 82, <b>React</b> and Node, <b>2027</b></span><span class="ui-search__m">2 attempts</span></li>
+                <li class="ui-search__row"><span class="ui-search__ico"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="6" r="2.5"/><path d="M3.5 13.5c.6-2.3 2.4-3.5 4.5-3.5s3.9 1.2 4.5 3.5"/></svg></span><span class="ui-search__t">Hire, 76, <b>React</b> Native, <b>2027</b></span><span class="ui-search__m">1 attempt</span></li>
+              </ul>
+              <div class="ui-search__foot"><span><kbd>&uarr;</kbd><kbd>&darr;</kbd> to move</span><span><kbd>Enter</kbd> to request an introduction</span></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing" style="--hm: 2" aria-labelledby="pricing-h">
+    <div class="wrap">
+      <div class="section-head"><h2 id="pricing-h">Interview prices</h2><p>The first one is free for every student with a confirmed email. Packs never expire.</p></div>
+      <div class="grid">
+        <article data-tilt class="card card--plan span-4">
+          <h3>First interview</h3>
+          <p class="t-small muted">Once per student</p>
+          <p class="price"><span class="t-stat">Free</span></p>
+          <a class="btn btn--secondary btn--wide" href="/signup">Sign up with your email</a>
+          <ul class="checks"><li>Full 40-minute interview</li><li>Resume score and fixes</li><li>Complete report</li></ul>
+        </article>
+        <article data-tilt class="card card--plan span-4 is-featured">
+          <span class="badge">For placement season</span>
+          <h3>Pack of three</h3>
+          <p class="t-small muted">₹133 an interview</p>
+          <p class="price"><span class="t-stat">₹399</span></p>
+          <a class="btn btn--primary btn--wide" href="/app/billing">Buy the pack</a>
+          <ul class="checks"><li>Three interviews, no expiry</li><li>A new problem each time</li><li>Your score across attempts</li></ul>
+        </article>
+        <article data-tilt class="card card--plan span-4">
+          <h3>Single interview</h3>
+          <p class="t-small muted">Per interview</p>
+          <p class="price"><span class="t-stat">₹149</span></p>
+          <a class="btn btn--secondary btn--wide" href="/app/billing">Buy one interview</a>
+          <ul class="checks"><li>A new question set</li><li>Full report every time</li><li>Attempts shown on your result</li></ul>
+        </article>
+      </div>
+      <p class="pay"><img src="/landing/assets/icons/visa.svg" alt="Visa" width="68" height="22"><img src="/landing/assets/icons/mastercard.svg" alt="Mastercard" width="29" height="22"><span>Cards, UPI and netbanking, paid through Razorpay</span></p>
+    </div>
+  </section>
+
+  <section class="section" id="faq" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="grid">
+        <div class="span-5 stack-6">
+          <h2 id="faq-h">Questions</h2>
+          <p class="muted">How your data is kept is set out in full on the privacy page.</p>
+          <a class="link" href="/privacy">Read the privacy page</a>
+          <div class="frame frame--split" data-tilt style="--ratio: 62%">
+            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:420px;--ax:max(24px, 50% - 210px);--ay:32px">
+              <div class="ui ui-files" data-ui="files" data-ui-still data-reading="Saving {n} of {total}">
+                <div class="ui-files__status"><span class="ui-dot"></span><span data-files-status>What we keep after your interview</span></div>
+                <ul class="ui-files__grid">
+                  <li class="ui-file is-done"><span class="ui-file__icon"><svg class="ui-file__glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.25 2.75h8L18.75 7.25v14H6.25z"/><path d="M14 2.75v4.75h4.75M9 12.5h6.5M9 15.5h6.5M9 18.5h4"/></svg></span><span class="ui-file__name">Transcript</span><span class="ui-file__kind">Text</span><span class="ui-file__bar"><i></i></span><span class="ui-file__check"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 8.2 2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></li>
+                  <li class="ui-file is-done"><span class="ui-file__icon"><img src="/landing/assets/icons/py.svg" alt=""></span><span class="ui-file__name">solution.py</span><span class="ui-file__kind">Your code</span><span class="ui-file__bar"><i></i></span><span class="ui-file__check"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 8.2 2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></li>
+                  <li class="ui-file is-done"><span class="ui-file__icon"><img src="/landing/assets/icons/json.svg" alt=""></span><span class="ui-file__name">Integrity log</span><span class="ui-file__kind">JSON</span><span class="ui-file__bar"><i></i></span><span class="ui-file__check"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 8.2 2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></li>
+                  <li class="ui-file is-done"><span class="ui-file__icon"><img src="/landing/assets/icons/chrome.svg" alt=""></span><span class="ui-file__name">Camera check</span><span class="ui-file__kind">In your browser only</span><span class="ui-file__bar"><i></i></span><span class="ui-file__check"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 8.2 2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></li>
+                </ul>
+              </div>
+            </div></div>
+          </div>
+        </div>
+        <div class="faq span-6 start-7">
+          <div class="faq__item"><h3>Is my camera recorded?</h3><p>No. Your browser checks that one face is in frame. No video or image is uploaded. We keep the transcript, your code and the integrity log.</p></div>
+          <div class="faq__item"><h3>How is the score decided?</h3><p>By code. Hidden tests, the timer, hints and warnings are measured. Spoken answers are checked against fixed key points.</p></div>
+          <div class="faq__item"><h3>Who can see my result?</h3><p>Only you, until you publish it. Recruiters see your contact details only after you approve their request.</p></div>
+          <div class="faq__item"><h3>Can I retake the interview?</h3><p>Yes. The leaderboard shows your latest result and how many attempts you took.</p></div>
+          <div class="faq__item"><h3>What do I need?</h3><p>A laptop with Chrome, a camera, a microphone and forty quiet minutes.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer closing footer--dark ground-inverse foot" id="contact" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="foot__cta">
+      <div><h2 id="close-h">Sit your first interview this week</h2><p class="t-lead">Free, 40 minutes, the full report the same evening.</p></div>
+      <div class="btn-row"><a class="btn btn--primary" href="/signup">Take a free interview<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a><a class="btn btn--secondary" href="#report">See a sample report</a></div>
+    </div>
+    <div class="closing__links foot__main">
+      <div class="grid">
+        <div class="span-4 foot__brand">
+          <a class="nav__logo" href="#top"><span class="hm-logo" role="img" aria-label="Hiremark"><svg viewBox="0 0 28 32" aria-hidden="true" focusable="false"><path d="M2 7.5 9.5 2v28H2z"/><path d="M18.5 2H26v22.5L18.5 30z"/><path d="M11 18.2l6-5.4v5.6l-6 5.4z" class="h-bar"/></svg><span aria-hidden="true">iremark</span></span></a>
+          <p class="footer__lede">Mock interviews for SDE freshers, marked by code, for students outside the top ten campuses.</p>
+          <!-- social links: replace each platform home URL with Hiremark's own profile --><ul class="foot__social" aria-label="Hiremark on social media"><li><a class="soc" href="https://www.linkedin.com/" style="--brand:#0a66c2" aria-label="Hiremark on LinkedIn" rel="noopener"><svg aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g> <path d="M218.123122,218.127392 L180.191928,218.127392 L180.191928,158.724263 C180.191928,144.559023 179.939053,126.323993 160.463756,126.323993 C140.707926,126.323993 137.685284,141.757585 137.685284,157.692986 L137.685284,218.123441 L99.7540894,218.123441 L99.7540894,95.9665207 L136.168036,95.9665207 L136.168036,112.660562 L136.677736,112.660562 C144.102746,99.9650027 157.908637,92.3824528 172.605689,92.9280076 C211.050535,92.9280076 218.138927,118.216023 218.138927,151.114151 L218.123122,218.127392 Z M56.9550587,79.2685282 C44.7981969,79.2707099 34.9413443,69.4171797 34.9391618,57.260052 C34.93698,45.1029244 44.7902948,35.2458562 56.9471566,35.2436736 C69.1040185,35.2414916 78.9608713,45.0950217 78.963054,57.2521493 C78.9641017,63.090208 76.6459976,68.6895714 72.5186979,72.8184433 C68.3913982,76.9473153 62.7929898,79.26748 56.9550587,79.2685282 M75.9206558,218.127392 L37.94995,218.127392 L37.94995,95.9665207 L75.9206558,95.9665207 L75.9206558,218.127392 Z M237.033403,0.0182577091 L18.8895249,0.0182577091 C8.57959469,-0.0980923971 0.124827038,8.16056231 -0.001,18.4706066 L-0.001,237.524091 C0.120519052,247.839103 8.57460631,256.105934 18.8895249,255.9977 L237.033403,255.9977 C247.368728,256.125818 255.855922,247.859464 255.999,237.524091 L255.999,18.4548016 C255.851624,8.12438979 247.363742,-0.133792868 237.033403,0.000790807055" fill="currentColor"></path> </g></svg></a></li><li><a class="soc" href="https://www.instagram.com/" style="--brand:#e1306c" aria-label="Hiremark on Instagram" rel="noopener"><svg aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g> <path d="M127.999746,23.06353 C162.177385,23.06353 166.225393,23.1936027 179.722476,23.8094161 C192.20235,24.3789926 198.979853,26.4642218 203.490736,28.2166477 C209.464938,30.5386501 213.729395,33.3128586 218.208268,37.7917319 C222.687141,42.2706052 225.46135,46.5350617 227.782844,52.5092638 C229.535778,57.0201472 231.621007,63.7976504 232.190584,76.277016 C232.806397,89.7746075 232.93647,93.8226147 232.93647,128.000254 C232.93647,162.177893 232.806397,166.225901 232.190584,179.722984 C231.621007,192.202858 229.535778,198.980361 227.782844,203.491244 C225.46135,209.465446 222.687141,213.729903 218.208268,218.208776 C213.729395,222.687649 209.464938,225.461858 203.490736,227.783352 C198.979853,229.536286 192.20235,231.621516 179.722476,232.191092 C166.227425,232.806905 162.179418,232.936978 127.999746,232.936978 C93.8200742,232.936978 89.772067,232.806905 76.277016,232.191092 C63.7971424,231.621516 57.0196391,229.536286 52.5092638,227.783352 C46.5345536,225.461858 42.2700971,222.687649 37.7912238,218.208776 C33.3123505,213.729903 30.538142,209.465446 28.2166477,203.491244 C26.4637138,198.980361 24.3784845,192.202858 23.808908,179.723492 C23.1930946,166.225901 23.0630219,162.177893 23.0630219,128.000254 C23.0630219,93.8226147 23.1930946,89.7746075 23.808908,76.2775241 C24.3784845,63.7976504 26.4637138,57.0201472 28.2166477,52.5092638 C30.538142,46.5350617 33.3123505,42.2706052 37.7912238,37.7917319 C42.2700971,33.3128586 46.5345536,30.5386501 52.5092638,28.2166477 C57.0196391,26.4642218 63.7971424,24.3789926 76.2765079,23.8094161 C89.7740994,23.1936027 93.8221066,23.06353 127.999746,23.06353 M127.999746,0 C93.2367791,0 88.8783247,0.147348072 75.2257637,0.770274749 C61.601148,1.39218523 52.2968794,3.55566141 44.1546281,6.72008828 C35.7374966,9.99121548 28.5992446,14.3679613 21.4833489,21.483857 C14.3674532,28.5997527 9.99070739,35.7380046 6.71958019,44.1551362 C3.55515331,52.2973875 1.39167714,61.6016561 0.769766653,75.2262718 C0.146839975,88.8783247 0,93.2372872 0,128.000254 C0,162.763221 0.146839975,167.122183 0.769766653,180.774236 C1.39167714,194.398852 3.55515331,203.703121 6.71958019,211.845372 C9.99070739,220.261995 14.3674532,227.400755 21.4833489,234.516651 C28.5992446,241.632547 35.7374966,246.009293 44.1546281,249.28042 C52.2968794,252.444847 61.601148,254.608323 75.2257637,255.230233 C88.8783247,255.85316 93.2367791,256 127.999746,256 C162.762713,256 167.121675,255.85316 180.773728,255.230233 C194.398344,254.608323 203.702613,252.444847 211.844864,249.28042 C220.261995,246.009293 227.400247,241.632547 234.516143,234.516651 C241.632039,227.400755 246.008785,220.262503 249.279912,211.845372 C252.444339,203.703121 254.607815,194.398852 255.229725,180.774236 C255.852652,167.122183 256,162.763221 256,128.000254 C256,93.2372872 255.852652,88.8783247 255.229725,75.2262718 C254.607815,61.6016561 252.444339,52.2973875 249.279912,44.1551362 C246.008785,35.7380046 241.632039,28.5997527 234.516143,21.483857 C227.400247,14.3679613 220.261995,9.99121548 211.844864,6.72008828 C203.702613,3.55566141 194.398344,1.39218523 180.773728,0.770274749 C167.121675,0.147348072 162.762713,0 127.999746,0 Z M127.999746,62.2703115 C91.698262,62.2703115 62.2698034,91.69877 62.2698034,128.000254 C62.2698034,164.301738 91.698262,193.730197 127.999746,193.730197 C164.30123,193.730197 193.729689,164.301738 193.729689,128.000254 C193.729689,91.69877 164.30123,62.2703115 127.999746,62.2703115 Z M127.999746,170.667175 C104.435741,170.667175 85.3328252,151.564259 85.3328252,128.000254 C85.3328252,104.436249 104.435741,85.3333333 127.999746,85.3333333 C151.563751,85.3333333 170.666667,104.436249 170.666667,128.000254 C170.666667,151.564259 151.563751,170.667175 127.999746,170.667175 Z M211.686338,59.6734287 C211.686338,68.1566129 204.809755,75.0337031 196.326571,75.0337031 C187.843387,75.0337031 180.966297,68.1566129 180.966297,59.6734287 C180.966297,51.1902445 187.843387,44.3136624 196.326571,44.3136624 C204.809755,44.3136624 211.686338,51.1902445 211.686338,59.6734287 Z" fill="currentColor"></path> </g></svg></a></li><li><a class="soc" href="https://www.youtube.com/" style="--brand:#ff0033" aria-label="Hiremark on YouTube" rel="noopener"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 180"><defs><mask id="k-youtubeicon" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="180"><g fill="#fff"><g> <path d="M250.346231,28.0746923 C247.358133,17.0320558 238.732098,8.40602109 227.689461,5.41792308 C207.823743,0 127.868333,0 127.868333,0 C127.868333,0 47.9129229,0.164179487 28.0472049,5.58210256 C17.0045684,8.57020058 8.37853373,17.1962353 5.39043571,28.2388718 C-0.618533519,63.5374615 -2.94988224,117.322662 5.5546152,151.209308 C8.54271322,162.251944 17.1687479,170.877979 28.2113844,173.866077 C48.0771024,179.284 128.032513,179.284 128.032513,179.284 C128.032513,179.284 207.987923,179.284 227.853641,173.866077 C238.896277,170.877979 247.522312,162.251944 250.51041,151.209308 C256.847738,115.861464 258.801474,62.1091 250.346231,28.0746923 Z" fill="#fff"></path> <polygon fill="#000" points="102.420513 128.06 168.749025 89.642 102.420513 51.224"></polygon> </g></g></mask></defs><rect x="0" y="0" width="256" height="180" fill="currentColor" mask="url(#k-youtubeicon)"/></svg></a></li><li><a class="soc" href="https://github.com/" style="--brand:#6e5494" aria-label="Hiremark on GitHub" rel="noopener"><svg aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 250"><g> <path d="M128.00106,0 C57.3172926,0 0,57.3066942 0,128.00106 C0,184.555281 36.6761997,232.535542 87.534937,249.460899 C93.9320223,250.645779 96.280588,246.684165 96.280588,243.303333 C96.280588,240.251045 96.1618878,230.167899 96.106777,219.472176 C60.4967585,227.215235 52.9826207,204.369712 52.9826207,204.369712 C47.1599584,189.574598 38.770408,185.640538 38.770408,185.640538 C27.1568785,177.696113 39.6458206,177.859325 39.6458206,177.859325 C52.4993419,178.762293 59.267365,191.04987 59.267365,191.04987 C70.6837675,210.618423 89.2115753,204.961093 96.5158685,201.690482 C97.6647155,193.417512 100.981959,187.77078 104.642583,184.574357 C76.211799,181.33766 46.324819,170.362144 46.324819,121.315702 C46.324819,107.340889 51.3250588,95.9223682 59.5132437,86.9583937 C58.1842268,83.7344152 53.8029229,70.715562 60.7532354,53.0843636 C60.7532354,53.0843636 71.5019501,49.6441813 95.9626412,66.2049595 C106.172967,63.368876 117.123047,61.9465949 128.00106,61.8978432 C138.879073,61.9465949 149.837632,63.368876 160.067033,66.2049595 C184.49805,49.6441813 195.231926,53.0843636 195.231926,53.0843636 C202.199197,70.715562 197.815773,83.7344152 196.486756,86.9583937 C204.694018,95.9223682 209.660343,107.340889 209.660343,121.315702 C209.660343,170.478725 179.716133,181.303747 151.213281,184.472614 C155.80443,188.444828 159.895342,196.234518 159.895342,208.176593 C159.895342,225.303317 159.746968,239.087361 159.746968,243.303333 C159.746968,246.709601 162.05102,250.70089 168.53925,249.443941 C219.370432,232.499507 256,184.536204 256,128.00106 C256,57.3066942 198.691187,0 128.00106,0 Z M47.9405593,182.340212 C47.6586465,182.976105 46.6581745,183.166873 45.7467277,182.730227 C44.8183235,182.312656 44.2968914,181.445722 44.5978808,180.80771 C44.8734344,180.152739 45.876026,179.97045 46.8023103,180.409216 C47.7328342,180.826786 48.2627451,181.702199 47.9405593,182.340212 Z M54.2367892,187.958254 C53.6263318,188.524199 52.4329723,188.261363 51.6232682,187.366874 C50.7860088,186.474504 50.6291553,185.281144 51.2480912,184.70672 C51.8776254,184.140775 53.0349512,184.405731 53.8743302,185.298101 C54.7115892,186.201069 54.8748019,187.38595 54.2367892,187.958254 Z M58.5562413,195.146347 C57.7719732,195.691096 56.4895886,195.180261 55.6968417,194.042013 C54.9125733,192.903764 54.9125733,191.538713 55.713799,190.991845 C56.5086651,190.444977 57.7719732,190.936735 58.5753181,192.066505 C59.3574669,193.22383 59.3574669,194.58888 58.5562413,195.146347 Z M65.8613592,203.471174 C65.1597571,204.244846 63.6654083,204.03712 62.5716717,202.981538 C61.4524999,201.94927 61.1409122,200.484596 61.8446341,199.710926 C62.5547146,198.935137 64.0575422,199.15346 65.1597571,200.200564 C66.2704506,201.230712 66.6095936,202.705984 65.8613592,203.471174 Z M75.3025151,206.281542 C74.9930474,207.284134 73.553809,207.739857 72.1039724,207.313809 C70.6562556,206.875043 69.7087748,205.700761 70.0012857,204.687571 C70.302275,203.678621 71.7478721,203.20382 73.2083069,203.659543 C74.6539041,204.09619 75.6035048,205.261994 75.3025151,206.281542 Z M86.046947,207.473627 C86.0829806,208.529209 84.8535871,209.404622 83.3316829,209.4237 C81.8013,209.457614 80.563428,208.603398 80.5464708,207.564772 C80.5464708,206.498591 81.7483088,205.631657 83.2786917,205.606221 C84.8005962,205.576546 86.046947,206.424403 86.046947,207.473627 Z M96.6021471,207.069023 C96.7844366,208.099171 95.7267341,209.156872 94.215428,209.438785 C92.7295577,209.710099 91.3539086,209.074206 91.1652603,208.052538 C90.9808515,206.996955 92.0576306,205.939253 93.5413813,205.66582 C95.054807,205.402984 96.4092596,206.021919 96.6021471,207.069023 Z" fill="currentColor"></path> </g></svg></a></li><li><a class="soc" href="https://discord.com/" style="--brand:#5865f2" aria-label="Hiremark on Discord" rel="noopener"><svg aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 199"><g> <path d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z" fill="currentColor" fill-rule="nonzero"></path> </g></svg></a></li></ul>
+        </div>
+        <div class="span-2 footer__col"><h3>Product</h3><ul><li><a href="#report">Report</a></li><li><a href="#interview">Interview</a></li><li><a href="#rules">Scoring</a></li><li><a href="#pricing">Prices</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Students</h3><ul><li><a href="/signup">Sign up</a></li><li><a href="/login">Sign in</a></li><li><a href="/leaderboard">Leaderboard</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Recruiters</h3><ul><li><a href="#recruiters">Search</a></li><li><a href="/recruiters">Why Hiremark</a></li><li><a href="/pricing">Plans</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Trust</h3><ul><li><a href="/privacy">Privacy</a></li><li><a href="#faq">Questions</a></li></ul></div>
+      </div>
+    </div>
+    <p class="foot__word" aria-hidden="true">Hiremark</p>
+    <div class="footer__legal foot__legal">
+      <span>&copy; 2026 Hiremark</span>
+      <span class="foot__note"><sup>1</sup> Deloitte India, Campus Workforce Trends 2026, a survey of 257 organisations.</span>
+      <a href="/privacy">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/landing/assets/system.js"></script>
+<script type="module" src="/landing/assets/motion/motion.js"></script>
+<script type="module" src="/landing/assets/layout/layout.js"></script>
+<script>
+(function () {
+  var html = document.documentElement, btn = document.querySelector('[data-theme-toggle]');
+  function label() { btn.setAttribute('aria-label', html.dataset.theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'); }
+  label();
+  btn.addEventListener('click', function () {
+    var t = html.dataset.theme === 'dark' ? 'light' : 'dark';
+    html.dataset.theme = t; html.dataset.tone = t; label();
+    try { localStorage.setItem('hm-theme', t); } catch (e) {}
+  });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(hover: hover)').matches) return;
+  document.querySelectorAll('[data-tilt]').forEach(function (el) {
+    var max = el.classList.contains('hero__media') || el.classList.contains('frame') ? 4 : 7;
+    el.addEventListener('pointermove', function (e) {
+      var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      el.classList.add('is-tilting');
+      el.style.setProperty('--ry', ((x - 0.5) * max).toFixed(2) + 'deg');
+      el.style.setProperty('--rx', ((0.5 - y) * max).toFixed(2) + 'deg');
+      el.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+      el.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+    });
+    el.addEventListener('pointerleave', function () { el.classList.remove('is-tilting'); el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  var root = document.querySelector('[data-meet]'); if (!root) return;
+  var video = root.querySelector('[data-meet-video]'), off = root.querySelector('[data-meet-off]'), 
+      mic = root.querySelector('[data-meet-mic]'), cam = root.querySelector('[data-meet-cam]'), level = root.querySelector('[data-meet-level]'),
+      note = root.querySelector('[data-meet-note]'), clock = root.querySelector('[data-meet-clock]');
+  var stream = null, ctx = null, raf = 0;
+  // the call clock counts down, like the interview's own timer
+  var secs = 14 * 60 + 8;
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(function () { secs = secs > 0 ? secs - 1 : 40 * 60; clock.textContent = String(Math.floor(secs / 60)).padStart(2, '0') + ':' + String(secs % 60).padStart(2, '0'); }, 1000);
+  function set(btn, on, what) { btn.setAttribute('aria-pressed', on ? 'true' : 'false'); btn.setAttribute('aria-label', (on ? 'Turn off ' : 'Turn on ') + what); }
+  function meter() {
+    var an = ctx.createAnalyser(); an.fftSize = 256; ctx.createMediaStreamSource(stream).connect(an);
+    var buf = new Uint8Array(an.fftSize);
+    (function tick() { an.getByteTimeDomainData(buf); var m = 0; for (var i = 0; i < buf.length; i++) m = Math.max(m, Math.abs(buf[i] - 128));
+      var t = stream.getAudioTracks()[0]; level.style.height = (t && t.enabled ? Math.min(100, m * 1.6) : 0) + '%'; raf = requestAnimationFrame(tick); })();
+  }
+  function stop() { if (stream) stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; cancelAnimationFrame(raf); if (ctx) ctx.close(); ctx = null;
+    video.hidden = true; off.hidden = false; root.classList.remove('is-live'); set(mic, false, 'your microphone'); set(cam, false, 'your camera'); }
+  function go() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { note.textContent = 'This browser cannot open a camera. Use Chrome on a laptop.'; return; }
+    note.textContent = 'Allow the camera in the prompt at the top of the window.';
+    navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: true }).then(function (s) {
+      stream = s; video.srcObject = s; video.hidden = false; video.play(); off.hidden = true; root.classList.add('is-live');
+      set(mic, true, 'your microphone'); set(cam, true, 'your camera');
+      note.textContent = 'This is how you will look in the interview. Nothing is recorded.';
+      try { ctx = new (window.AudioContext || window.webkitAudioContext)(); meter(); } catch (e) {}
+    }).catch(function () {
+      note.textContent = 'Camera blocked. Allow it from the icon in the address bar, then try again.';
+    });
+  }
+  cam.addEventListener('click', function () {
+    if (!stream) return go();
+    var t = stream.getVideoTracks()[0]; t.enabled = !t.enabled; video.hidden = !t.enabled; off.hidden = t.enabled; set(cam, t.enabled, 'your camera');
+  });
+  mic.addEventListener('click', function () {
+    if (!stream) return go();
+    var t = stream.getAudioTracks()[0]; if (t) { t.enabled = !t.enabled; set(mic, t.enabled, 'your microphone'); }
+  });
+  addEventListener('pagehide', stop);
+})();
+</script>
+</body>
+</html>

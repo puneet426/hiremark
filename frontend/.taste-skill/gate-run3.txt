@@ -1,0 +1,45 @@
+gate: checking http://localhost:3123/ (software); this takes a few minutes on a CPU Chrome
+gate: rounds used up; 13 FAIL open
+  FAIL card-layout      section#interview  [1440]
+       one layout (.frame--split) in 3 sections: section#interview, section#recruiters, section#faq; a card layout at most twice
+       fix: a card layout at most twice on a page: build the other sections another way
+  FAIL copy-headings    div.wrap > div.grid > article.card.card--row:nth-of-type(1) > h3.ui-pause-beside "Score yo  [1440]
+       "Score your resume" names no product, part, place or section (10 headings like it; at most one brand line per page) (and 9 more like it: "Read your verdict", "Scores kept by code. The", "Runs hidden tests on you", "Logs 
+       fix: name the thing in every heading: the product, a part, the place or a section noun
+  FAIL contrast         ul.ui-notify__list > li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__body "  [1440]
+       body text over a effect reads at 2.3:1 at its worst tenth (needs 4.5:1), on a busy ground
+       fix: put the text on a calm part of the picture, or on a solid panel
+  FAIL section-air      section#figures > div.wrap > div.grid.figs "89012345678678901234567890123456%of orga"  [1440]
+       a top border across 100% of the container, between the section's content: sections and their parts are told apart by air and ground, not lines (SR-3)
+       fix: take the rule out: sections and their parts are parted by their ground and the air between them
+  FAIL container-edges  section#pricing > div.wrap > p.pay > span "Cards, UPI and netbanking, paid through "  [1440]
+       1 text block starts on a left line at x 204, 124px from the container's left: text starts on the container's left, or on one split line (x 623, 732, 841) (SR-6)
+       fix: start the text on the container's left, or on the one split line every split shares
+  FAIL heading-scale    div.wrap > div.grid.figs > div.span-4:nth-of-type(1) > p.t-stat "86%"  [390]
+       the figure "86%" is set at 40px, larger than the h1 (38.4px) (and 1 more like it: "48%")
+       fix: set figures below the h1: a stat reads as data, not as the headline
+  FAIL off-grid         div.span-5.stack-6 > div:nth-of-type(1) > div.people > img:nth-of-type(2) "img: Diksha"  [390]
+       left edge at 48px, 24px off the page margin at 24px (82 elements, like img:nth-of-type(1))
+       fix: move it onto the page margin, or the column edge its section uses
+  FAIL contrast         div.share > div.share__body > pre.share__code > span.l:nth-of-type(5) "lowest = min(lowest  [390]
+       body text over a effect reads at 1.7:1 at its worst tenth (needs 4.5:1), on a busy ground (and 2 more like it: "Bullets start with a ver", "One face in frame 9m")
+       fix: put the text on a calm part of the picture, or on a solid panel
+  FAIL contrast         div.share__body > pre.share__code > span.l:nth-of-type(8) > span.c "# one pass, O(n) time,  [390]
+       body text over a picture reads at 1.7:1 at its worst tenth (needs 4.5:1), on a busy ground
+       fix: put the text on a calm part of the picture, or on a solid panel
+  FAIL contrast         li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__title > time "9m"  [390]
+       body text over a effect reads at 3.8:1 at its worst tenth (needs 4.5:1)
+       fix: put the text on a calm part of the picture, or on a solid panel
+  FAIL section-gaps     section#interview / section#steps  [390]
+       294px between these sections, +85% against the median 159px of gaps at a change of ground
+       fix: use one gap between sections (all within 25% of each other)
+  FAIL off-viewport     header.nav > div.wrap.nav__bar > button.nav__toggle  [320]
+       at 320px wide it runs 37px past the screen's right edge (cut there: the page clips what runs past it)
+       fix: keep it inside the screen at this width: let it shrink, wrap or stack
+  FAIL screen-short (screen-height) #recruiters section.section.bg-halo "Freshers you can search by inter"  [390]
+       838px tall; one screen under the nav is 844px
+       fix: make the section one full screen (--h: 1, layout-v4.md section 2)
+  WAIVED hero-lines section.hero h1: the h1 is final, 34 characters, and sits on three lines at 1440; the check fills it to 45
+  40 WARN (not blocking), first: cut-text div.ui.ui-panel > div.ui-stat__head > di; cut-text ul.ui-notify__list > li.ui-note:nth-of-t; cut-text p.t-stat.mo-cr > span.mo-cr__col:nth-of-; cut-text p.t-stat.mo-cr > span.mo-cr__col:nth-of-; scroll-reveal section#figures > div.wrap > div.grid.fi
+Stop fixing: put these open FAILs and the waivers in your report, then finish.
+GATE: OPEN 13 (rounds used up)

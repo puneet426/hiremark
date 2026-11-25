@@ -1,0 +1,144 @@
+@import "tailwindcss";
+@import "@fontsource/mona-sans/400.css";
+@import "@fontsource/mona-sans/500.css";
+
+/* Two themes, the same as the home page: white and blue-black with a cornflower blue.
+   :root is light; html[data-theme="dark"] and .on-black (the footer) are dark. */
+:root {
+  --ink: #fbfbfa;          /* page background */
+  --panel: #ffffff;        /* cards, inputs */
+  --raised: #eef1f6;       /* hover, active nav */
+  --line: #e3e7ee;
+  --line-strong: #c9d0db;
+  --fg: #0b0d12;           /* text */
+  --fg-hover: #262b36;
+  --muted: #4a4f59;
+  --faint: #626a79;
+  --accent: #1f6feb;       /* buttons, links, the active tab */
+  --accent-hover: #1a5fd0;
+  --accent-ink: #ffffff;
+  --accent-dim: #1f6feb14;
+  --mark: #1f6feb;
+  --mark-dim: #e3edfd;
+  --hl: #cfe0fc;
+  --good: #138a52;
+  --warn: #a36100;
+  --bad: #d1343a;
+  --grid: #0b0d120a;
+  --glow: #1f6feb1f;
+  --shadow: 0 1px 2px #0b0d120d, 0 24px 60px -30px #0b0d1240;
+  color-scheme: light;
+}
+
+html[data-theme="dark"], .on-black {
+  --ink: #0a0d14;
+  --panel: #121722;
+  --raised: #1a2130;
+  --line: #232b3a;
+  --line-strong: #353f53;
+  --fg: #e9edf3;
+  --fg-hover: #ffffff;
+  --muted: #a3acba;
+  --faint: #8590a2;
+  --accent: #5ab9fc;
+  --accent-hover: #7cc8fd;
+  --accent-ink: #0a0d14;
+  --accent-dim: #5ab9fc1c;
+  --mark: #5ab9fc;
+  --mark-dim: #15263a;
+  --hl: #1d3550;
+  --good: #3ccf8e;
+  --warn: #f5b544;
+  --bad: #ff6369;
+  --grid: #ffffff0b;
+  --glow: #5ab9fc24;
+  --shadow: 0 30px 80px -30px #000000;
+  color-scheme: dark;
+}
+.on-black { background: radial-gradient(70% 80% at 50% 0%, #15233a, var(--ink) 70%); color: var(--fg); }
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-panel: var(--panel);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-fg-hover: var(--fg-hover);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-dim: var(--accent-dim);
+  --color-mark: var(--mark);
+  --color-mark-dim: var(--mark-dim);
+  --color-good: var(--good);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+  --font-sans: "Mona Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: "Mona Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: radial-gradient(1100px 520px at 85% -120px, var(--glow), transparent 70%) no-repeat, var(--ink);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: var(--accent-ink); }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.display { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.03em; line-height: 1.06; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+* { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+
+.frame { box-shadow: var(--shadow); }
+
+/* Ink underline that draws in on hover, for text links */
+.ink-link { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 220ms ease; }
+.ink-link:hover { background-size: 100% 1px; }
+
+/* The stamp: a pressed-ink verdict mark */
+.stamp {
+  border: 2px solid currentColor; border-radius: 6px; padding: 6px 14px 5px; display: inline-block;
+  font-family: var(--font-sans); letter-spacing: 0.01em; font-weight: 600;
+  mask-image: radial-gradient(circle at 30% 40%, #000 60%, #000c 75%, #000 90%);
+}
+@keyframes press { 0% { transform: scale(1.4); opacity: 0 } 60% { transform: scale(0.97); opacity: 1 } 100% { transform: scale(1) } }
+.stamp-in { animation: press 420ms cubic-bezier(.2,.9,.3,1.1) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px) } to { opacity: 1; transform: none } }
+.rise { animation: rise 320ms ease-out both; }
+@keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 50%, transparent) } 100% { box-shadow: 0 0 0 10px transparent } }
+.listening { animation: pulse-ring 1.4s ease-out infinite; }
+/* Hero headline: the final word gets an ink strike drawn under it once */
+@keyframes underline-draw { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+.ink-under { position: relative; white-space: nowrap; }
+.ink-under::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0.06em; height: 0.07em; background: currentColor; transform-origin: left; animation: underline-draw 700ms 350ms cubic-bezier(.6,0,.2,1) both; }
+@media (prefers-reduced-motion: reduce) { .stamp-in, .rise, .listening, .ink-under::after { animation: none } .ink-link { transition: none } }
+
+.grid-paper {
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Highlighter stroke behind a phrase */
+.hl { background: linear-gradient(transparent 58%, var(--hl) 58%, var(--hl) 92%, transparent 92%); padding: 0 0.1em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+
+
+/* the logo: a cut H (two stems with angled cuts, a rising crossbar split off by two gaps), then "iremark" */
+.hm-logo { display: inline-flex; align-items: baseline; font-weight: 500; letter-spacing: -0.03em; line-height: 1; }
+.hm-logo svg { width: 0.7em; height: 0.8em; margin-right: 0.04em; fill: var(--accent); align-self: baseline; transform: translateY(0.035em); overflow: visible; }
+.hm-logo svg .h-bar { fill: var(--fg); transition: transform .3s cubic-bezier(.2,.8,.2,1); }
+a:hover > .hm-logo svg .h-bar, a.hm-logo:hover svg .h-bar { transform: translateY(-1.5px); }
+
+/* social buttons in the footer: ink at rest, the network's colour on hover */
+.soc { --brand: var(--accent); width: 40px; height: 40px; display: grid; place-items: center; border-radius: 999px; color: var(--fg); border: 1px solid var(--line-strong); transition: background-color .2s, border-color .2s, color .2s, transform .2s; }
+.soc svg { width: 17px; height: 17px; }
+.soc:hover { background: var(--brand); border-color: var(--brand); color: #ffffff; transform: translateY(-2px); }
+.soc:active { transform: scale(.95); }
+
+/* the big wordmark that closes the footer */
+.foot-word { font: 500 clamp(64px, 16.5vw, 236px)/0.78 var(--font-display); letter-spacing: -0.065em; text-align: center; white-space: nowrap; user-select: none;
+  color: transparent; background: linear-gradient(180deg, color-mix(in oklab, var(--fg) 16%, transparent), color-mix(in oklab, var(--fg) 2%, transparent) 85%); -webkit-background-clip: text; background-clip: text; }

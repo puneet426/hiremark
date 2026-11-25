@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.venv/
+__pycache__/
+*.db
+*.db-*
+.env
+backend/uploads/
+frontend/public/monaco/
+frontend/public/mediapipe/
+.pytest_cache/

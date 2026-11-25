@@ -1,0 +1,93 @@
+gate: checking http://localhost:3123/ (software); this takes a few minutes on a CPU Chrome
+gate: 29 FAIL open
+  FAIL card-layout      section#interview  [1440]
+       one layout (.frame--split) in 3 sections: section#interview, section#recruiters, section#faq; a card layout at most twice
+       fix: a card layout at most twice on a page: build the other sections another way
+  FAIL dark-ground      section#interview > div.wrap > div.grid > div.frame.frame--split  [1440, 390]
+       the ground behind the UI is only 1.1:1 lighter than its card (1.0% against 0.4% luminance; needs 3:1)
+       fix: light the ground behind the UI (a daylight data-fx-palette): at least 3:1 against the card
+  FAIL dark-ground      section#recruiters > div.wrap > div.grid > div.frame.frame--split  [1440, 390]
+       the ground behind the UI is only 1.1:1 lighter than its card (1.0% against 0.4% luminance; needs 3:1)
+       fix: light the ground behind the UI (a daylight data-fx-palette): at least 3:1 against the card
+  FAIL dark-ground      div.wrap > div.grid > div.span-5.stack-6 > div.frame.frame--split  [1440, 390]
+       the ground behind the UI is only 1.1:1 lighter than its card (1.1% against 0.4% luminance; needs 3:1)
+       fix: light the ground behind the UI (a daylight data-fx-palette): at least 3:1 against the card
+  FAIL copy-headings    div.wrap > div.grid > article.card.card--row:nth-of-type(1) > h3 "Score your resume"  [1440]
+       "Score your resume" names no product, part, place or section (10 headings like it; at most one brand line per page) (and 9 more like it: "Read your verdict", "Scores kept by code. The", "Runs hidden tests on you", "Logs 
+       fix: name the thing in every heading: the product, a part, the place or a section noun
+  FAIL contrast         ul.ui-notify__list > li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__body "  [1440]
+       body text over a effect reads at 2.3:1 at its worst tenth (needs 4.5:1), on a busy ground
+       fix: put the text on a calm part of the picture, or on a solid panel
+  FAIL section-gaps     section#report / section#interview  [1440]
+       736px between these sections, +89% against the median 390px of gaps at a change of ground
+       fix: use one gap between sections (all within 25% of each other)
+  FAIL visual-caption   div.hero__media.meet > div.share > div.share__tests > span:nth-of-type(1) "Sample 1 22 ms"  [1440]
+       a caption-like line of 12px sits 19px over the picture puneet-call.svg: "Sample 1 22 ms"; no caption or description under any image, render or visual (house rule)
+       fix: take the line away: no caption or description under, over or on any image, render or visual; a licence credit goes in one footer line
+  FAIL heading-order    div.share:nth-of-type(2) > div.share__body:nth-of-type(2) > div.share__q > h3 "Best day to  [1440]
+       "Best day to buy and sell" is an h3 after an h1: a level is skipped
+       fix: step down one level at a time (h1, h2, h3): change the tag, not the look; a footer's column heads are h3
+  FAIL section-height (screen-short, screen-height) section#recruiters "Freshers you can search by interview sco"  [1440, 390]
+       the section is 684px tall (0.8 screens), 216px short of one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)
+       fix: set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit
+  FAIL section-height   footer#contact "Sit your first interview this weekFree, "  [1440]
+       the section is 976px tall (1.1 screens), 76px over one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)
+       fix: set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit
+  FAIL section-height   section#pricing "Interview pricesThe first one is free fo"  [1440]
+       the section starts at 6084px, 216px above the screen grid (7 x 900px): sections start on whole screens (SR-2)
+       fix: make every section above it exactly one or two screens tall, so this one starts on a whole screen
+  FAIL section-height   section#faq "Questions How your data is kept is set o"  [1440]
+       the section starts at 6984px, 216px above the screen grid (8 x 900px): sections start on whole screens (SR-2)
+       fix: make every section above it exactly one or two screens tall, so this one starts on a whole screen
+  FAIL section-air      section#report / section#interview  [1440]
+       780px of air between the content of these two sections: 128-480px (64-600px WARN) (SR-3)
+       fix: keep 128-480px of air between the content of neighbouring sections (112-420px on a phone): the sections' padding (--padt, --padb)
+  FAIL section-air      section#report "Your report, question by question Every "  [1440]
+       the content fills 13.3% of the section's height (120 of 900px): 55% or more (40% WARN) (SR-3)
+       fix: fill the section to 55%: more content, a picture or a background layer, or merge it into the section above as its last block
+  FAIL section-air      section#figures > div.wrap > div.grid.figs "89012345678678901234567890123456%of orga"  [1440]
+       a top border across 100% of the container, between the section's content: sections and their parts are told apart by air and ground, not lines (SR-3)
+       fix: take the rule out: sections and their parts are parted by their ground and the air between them
+  FAIL one-section      h2#pricing-h "Interview prices"  [1440]
+       the screen at scroll 5400px (stride 6) shows 216px of section 8 and the heading of section 8 whole and the content of 2 sections, over 24px each beside section 7: a screen shows one section (another may peek 8px, 24px WA
+       fix: make each section exactly one screen or two, so a screen shows one section and no neighbour peeks
+  FAIL one-section      h2#faq-h "Questions"  [1440]
+       the screen at scroll 6300px (stride 7) shows 216px of section 9 and the heading of section 9 whole and the content of 2 sections, over 24px each beside section 8: a screen shows one section (another may peek 8px, 24px WA
+       fix: make each section exactly one screen or two, so a screen shows one section and no neighbour peeks
+  FAIL one-section      footer#contact "Sit your first interview this weekFree, "  [1440]
+       the screen at scroll 7200px (stride 8) shows 216px of section 10 and the content of 2 sections, over 24px each beside section 9: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)
+       fix: make each section exactly one screen or two, so a screen shows one section and no neighbour peeks
+  FAIL container-edges  section#pricing > div.wrap > p.pay > span "Cards, UPI and netbanking, paid through "  [1440]
+       1 text block starts on a left line at x 204, 124px from the container's left: text starts on the container's left, or on one split line (x 623, 732, 841) (SR-6)
+       fix: start the text on the container's left, or on the one split line every split shares
+  FAIL heading-scale    div.wrap > div.grid.figs > div.span-4:nth-of-type(1) > p.t-stat "86%"  [390]
+       the figure "86%" is set at 56px, larger than the h1 (38.4px) (and 1 more like it: "48%")
+       fix: set figures below the h1: a stat reads as data, not as the headline
+  FAIL contrast         div.share > div.share__body > pre.share__code > span.l:nth-of-type(5) "lowest = min(lowest  [390]
+       body text over a effect reads at 1.6:1 at its worst tenth (needs 4.5:1), on a busy ground (and 2 more like it: "Bullets start with a ver", "One face in frame 9m")
+       fix: put the text on a calm part of the picture, or on a solid panel
+  FAIL contrast         div.share__body > pre.share__code > span.l:nth-of-type(8) > span.c "# one pass, O(n) time,  [390]
+       body text over a picture reads at 1.0:1 at its worst tenth (needs 4.5:1), on a busy ground
+       fix: put the text on a calm part of the picture, or on a solid panel
+  FAIL contrast         li.ui-note:nth-of-type(3) > span.ui-note__text > span.ui-note__title > time "9m"  [390]
+       body text over a effect reads at 3.8:1 at its worst tenth (needs 4.5:1)
+       fix: put the text on a calm part of the picture, or on a solid panel
+  FAIL section-gaps     section#interview / section#steps  [390]
+       294px between these sections, +85% against the median 159px of gaps at a change of ground
+       fix: use one gap between sections (all within 25% of each other)
+  FAIL off-viewport     header.nav > div.wrap.nav__bar > button.nav__toggle  [320]
+       at 320px wide it runs 37px past the screen's right edge (the page is 334px wide and scrolls sideways)
+       fix: keep it inside the screen at this width: let it shrink, wrap or stack
+  FAIL off-viewport     div > div.people > img "Farhan"  [320]
+       at 320px wide it runs 14px past the screen's right edge (the page is 334px wide and scrolls sideways)
+       fix: keep it inside the screen at this width: let it shrink, wrap or stack
+  FAIL sparse           #report section.section "Your report, question by questio"  [1440]
+       its content fills 17% of its screen; merge it or give it its visual (0.55 is the aim)
+       fix: fill the section or make it a screen shorter
+  FAIL neighbour        #recruiters section.section.bg-halo "Freshers you can search by inter"  [1440]
+       framed, 53px of #pricing section.section "Interview pricesThe first one is" shows
+       fix: keep the next section's heading and picture out of this screen
+  WAIVED hero-lines section.hero h1: the h1 is final, 34 characters, and sits on three lines at 1440; the check fills it to 45
+  42 WARN (not blocking), first: cut-text div.ui.ui-panel > div.ui-stat__head > di; cut-text ul.ui-notify__list > li.ui-note:nth-of-t; cut-text p.t-stat.mo-cr > span.mo-cr__col:nth-of-; cut-text p.t-stat.mo-cr > span.mo-cr__col:nth-of-; scroll-reveal section#figures > div.wrap > div.grid.fi
+A FAIL you judge false: add {"check": "<id>", "target": "<its where, enough to name that one finding>", "reason": "<why, 12+ characters>"} to .taste-skill/waivers.json (one finding each, 5 at most, never for kit-edited or checker-gaming); it goes in your report. Never edit the kit's files or hide the page from the checker.
+GATE: FAIL 29 (round 2 of 3)

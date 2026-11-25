@@ -1,0 +1,66 @@
+
+1440x900  lines x 80 and 1360, nav 72px, one screen 900px
+  hero 900 tall; h1 69.12px/1.02, 3 lines, 519x212 at 80,158; lead 20/30, 4 lines, 516 wide; buttons 2 x 44; visual 628x716 at 732,120
+  stress: split h1 at 45 of 45 characters takes 4 lines, hero 900 tall
+  section section.hero.hero--split section.hero.hero--split "Your firs y     0  h   900  content 716
+  section #report section.section "Your report, question by questio"   y   900  h   900  content 708
+  section #interview section.section "Ten interviewers who listen whil y  1800  h   900  content 503
+  section #steps section.section.ground-surface "Your first interview  y  2700  h   900  content 575
+  section #rules section.section.ground-surface "Scores kept by code.  y  3600  h   900  content 596
+  section #figures section.section.statement "Campus hiring now tests  y  4500  h   900  content 351
+  section #recruiters section.section.bg-halo "Freshers you can search y  5400  h   900  content 503
+  section #pricing section.section "Interview pricesThe first one is"  y  6300  h   900  content 625
+  section #faq section.section "Questions How your data is kept "      y  7200  h   900  content 574
+  hero-lines       section.hero h1: the check fills the h1 to 45 characters (this hero's maxChars in heroes.json), not the page's own: it takes 4 lines at 1440, 3 at most
+
+820x1180  lines x 48 and 772, nav 72px, one screen 1180px
+  hero 1180 tall; h1 50.9795px/1.02, 2 lines, 724x104 at 48,158; lead 18.2352/27.3528, 4 lines, 470 wide; buttons 2 x 44; visual 724x597 at 48,519
+  stress: split h1 at 45 of 45 characters takes 2 lines, hero 1180 tall
+  section section.hero.hero--split section.hero.hero--split "Your firs y     0  h  1180  content 996
+  section #report section.section "Your report, question by questio"   y  1180  h  1180  content 988
+  section #interview section.section "Ten interviewers who listen whil y  2360  h  1180  content 966
+  section #steps section.section.ground-surface "Your first interview  y  3540  h  2360  content 1495
+  section #rules section.section.ground-surface "Scores kept by code.  y  5900  h  1180  content 561
+  section #figures section.section.statement "Campus hiring now tests  y  7080  h  1180  content 642
+  section #recruiters section.section.bg-halo "Freshers you can search y  8260  h  1007  content 863
+  section #pricing section.section "Interview pricesThe first one is"  y  9267  h  2360  content 1370
+  section #faq section.section "Questions How your data is kept "      y 11627  h  1432  content 1215
+  sparse           #rules section.section.ground-surface "Scores kept by code. The AI onl: its content fills 48% of its screen; merge it or give it its visual (0.55 is the aim)
+  screen-short     #recruiters section.section.bg-halo "Freshers you can search by inter": 1007px tall; one screen under the nav is 1180px
+
+390x844  lines x 24 and 366, nav 56px, one screen 844px
+  hero 844 tall; h1 38.4px/1.02, 2 lines, 342x78 at 24,134; lead 17.0054/25.5081, 4 lines, 342 wide; buttons 2 x 44; visual 342x306 at 24,514
+  stress: split h1 at 45 of 45 characters takes 3 lines, hero 844 tall
+  section section.hero.hero--split section.hero.hero--split "Your firs y     0  h   844  content 724
+  section #report section.section "Your report, question by questio"   y   844  h   844  content 700
+  section #interview section.section "Ten interviewers who listen whil y  1688  h  1037  content 893
+  section #steps section.section.ground-surface "Your first interview  y  2725  h  1688  content 1236
+  section #rules section.section.ground-surface "Scores kept by code.  y  4413  h   950  content 806
+  section #figures section.section.statement "Campus hiring now tests  y  5363  h   844  content 659
+  section #recruiters section.section.bg-halo "Freshers you can search y  6207  h   838  content 718
+  section #pricing section.section "Interview pricesThe first one is"  y  7045  h  1688  content 1326
+  section #faq section.section "Questions How your data is kept "      y  8733  h  1254  content 1093
+  screen-short     #recruiters section.section.bg-halo "Freshers you can search by inter": 838px tall; one screen under the nav is 844px
+  screen-height    #recruiters section.section.bg-halo "Freshers you can search by inter": 838px, 0.99 screens; a section is exactly one or two (--h), or on a phone at least one that its content fills
+
+320x640  lines x 24 and 296, nav 56px, one screen 640px
+  hero 827 tall; h1 38.4px/1.02, 3 lines, 272x118 at 24,118; lead 17/25.5, 5 lines, 272 wide; buttons 2 x 44; visual 272x240 at 24,563
+  stress: split h1 at 45 of 45 characters takes 4 lines, hero 866 tall
+  section section.hero.hero--split section.hero.hero--split "Your firs y     0  h   827  content 723
+  section #report section.section "Your report, question by questio"   y   827  h   640  content 496
+  section #interview section.section "Ten interviewers who listen whil y  1467  h  1027  content 883
+  section #steps section.section.ground-surface "Your first interview  y  2494  h  1380  content 1236
+  section #rules section.section.ground-surface "Scores kept by code.  y  3874  h  1007  content 863
+  section #figures section.section.statement "Campus hiring now tests  y  4881  h   857  content 713
+  section #recruiters section.section.bg-halo "Freshers you can search y  5738  h   852  content 732
+  section #pricing section.section "Interview pricesThe first one is"  y  6590  h  1568  content 1424
+  section #faq section.section "Questions How your data is kept "      y  8158  h  1260  content 1099
+  edge-right       nav actions: end at x 356.6, the page's right line is 296
+  neighbour        #interview section.section "Ten interviewers who listen whil": framed, 66px of #steps section.section.ground-surface "Your first interview in 3 steps " shows
+  screen-height    #steps section.section.ground-surface "Your first interview in 3 steps: 1380px, 2.16 screens; a section is exactly one or two (--h), or on a phone at least one that its content fills
+  neighbour        #rules section.section.ground-surface "Scores kept by code. The AI onl: framed, 99px of #figures section.section.statement "Campus hiring now tests skill fi" shows
+  screen-height    #pricing section.section "Interview pricesThe first one is": 1568px, 2.45 screens; a section is exactly one or two (--h), or on a phone at least one that its content fills
+  neighbour        #faq section.section "Questions How your data is kept ": framed, 20px of the footer shows
+  hero-fold        section.hero.hero--split section.hero.hero--split "Your first intervie: ends at y 827, past the fold (640): 1.29 screens tall
+  hero-maxchars    section.hero.hero--split section.hero.hero--split "Your first intervie: with a 45-character h1 (heroes.json maxChars): ends at y 866, past the fold (640): 1.35 screens tall
+  hero-lines       section.hero h1: the check fills the h1 to 45 characters (this hero's maxChars in heroes.json), not the page's own: it takes 4 lines at 320, 3 at most

@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en" data-type="software" data-radius="soft" data-buttons="pill" data-motion>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hiremark: AI mock interviews for SDE freshers</title>
+<meta name="description" content="A 40-minute interview on a live call, built from your resume: one coding problem, your projects and core CS. Your first one is free.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hiremark: AI mock interviews for SDE freshers">
+<meta property="og:description" content="A 40-minute interview on a live call, built from your resume. Your first one is free.">
+<meta property="og:image" content="/landing/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/landing/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#060606" media="(prefers-color-scheme: dark)">
+<meta name="site-kind" content="software">
+<meta name="page-type" content="software">
+<link rel="preload" href="/landing/fonts/mona-sans-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/landing/fonts/mona-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/landing/assets/system.css">
+<link rel="stylesheet" href="/landing/assets/ui/cards.css">
+<link rel="stylesheet" href="/landing/assets/motion/motion.css">
+<link rel="stylesheet" href="/landing/assets/backgrounds/backgrounds.css">
+<link rel="stylesheet" href="/landing/assets/layout/layout.css">
+<link rel="stylesheet" href="/landing/assets/icons/icon.css">
+<style>
+/* Mona Sans + Geist Mono (start.mjs types: mona), served from this site: the CSP allows no font host */
+@font-face { font-family: "Mona Sans"; font-weight: 400; font-display: swap; src: url(/landing/fonts/mona-sans-400.woff2) format("woff2"); }
+@font-face { font-family: "Mona Sans"; font-weight: 500; font-display: swap; src: url(/landing/fonts/mona-sans-500.woff2) format("woff2"); }
+@font-face { font-family: "Geist Mono"; font-weight: 400; font-display: swap; src: url(/landing/fonts/geist-mono-400.woff2) format("woff2"); }
+/* Two themes, both black and white only (start.mjs brand, light and dark). data-theme is set before paint. */
+:root {
+  --p-bg: #fafaf9; --p-surface: #efefed; --p-ink: #0a0a0a; --p-muted: #525250;
+  --p-accent: #0a0a0a; --p-accent-ink: #fafaf9; --p-action: #0a0a0a; --p-action-ink: #fafaf9;
+  --p-inv-bg: #060606; --p-inv-surface: #141414; --p-inv-ink: #f4f4f2; --p-inv-muted: #a3a3a0;
+  --p-inv-accent: #ffffff; --p-inv-accent-ink: #060606; --p-inv-action: #f4f4f2; --p-inv-action-ink: #060606;
+  --font-display: "Mona Sans", system-ui, sans-serif;
+  --font-text: "Mona Sans", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display-weight: 500;
+  --display-tracking: -0.03em;
+  --display-tracking-xl: -0.04em;
+  --ly-scale: 0.96;
+  --glow: #00000014;
+  --ground-bg: #e9e9e7; --ground-surface: #f2f2f0; --ground-ink: #0a0a0a; --ground-muted: #4a4a48; --ground-accent: #0a0a0a;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --p-bg: #060606; --p-surface: #121212; --p-ink: #f4f4f2; --p-muted: #a3a3a0;
+  --p-accent: #ffffff; --p-accent-ink: #060606; --p-action: #f4f4f2; --p-action-ink: #060606;
+  --p-inv-bg: #f4f4f2; --p-inv-surface: #e0e0df; --p-inv-ink: #060606; --p-inv-muted: #535353;
+  --p-inv-accent: #060606; --p-inv-accent-ink: #f4f4f2; --p-inv-action: #060606; --p-inv-action-ink: #f4f4f2;
+  --glow: #ffffff1f;
+  --ground-bg: #1a1a1a; --ground-surface: #222221; --ground-ink: #f4f4f2; --ground-muted: #a8a8a5; --ground-accent: #ffffff;
+  color-scheme: dark;
+}
+</style>
+<link rel="stylesheet" href="/landing/assets/ui/base.css">
+<link rel="stylesheet" href="/landing/assets/ui/voice/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/window/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/doc/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/chat/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/checklist/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/toggles/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/stat/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/code/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/notify/fragment.css">
+<link rel="stylesheet" href="/landing/assets/ui/search/fragment.css">
+<script>(function(){var t=null;try{t=localStorage.getItem('hm-theme')}catch(e){}if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';var h=document.documentElement;h.dataset.theme=t;h.dataset.tone=t})()</script>
+<script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
+<script src="/landing/assets/backgrounds/backgrounds.js"></script>
+<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
+<link rel="modulepreload" href="/landing/assets/moments/moments.js">
+<link rel="modulepreload" href="/landing/assets/moments/lib.js">
+<link rel="modulepreload" href="/landing/assets/moments/counter-rolls/moment.js">
+<style>
+/* page CSS: the app-frame recipe (sections-library.md), and one --p-h per card group */
+.app.ui { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); margin-top: var(--s-7); background: var(--u-bg); border: 1px solid var(--u-border); border-radius: var(--u-r); box-shadow: var(--u-shadow); }
+.app > .app__pane { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
+.app > .app__pane + .app__pane { border-left: 1px solid var(--u-line); }
+.app > .app__pane > .ui-panel { width: 100%; border: 0; border-radius: 0; box-shadow: none; }
+.app > .app__pane::after { content: ""; position: absolute; inset: auto 0 0 0; height: 64px; background: linear-gradient(transparent, var(--u-bg)); pointer-events: none; }
+@media (min-width: 1024px) and (max-width: 1279px) { .app.ui { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); } }
+@media (max-width: 1023px) {
+  .app.ui { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+  .app > .app__pane--list { max-height: 252px; }
+  .app > .app__pane--list::after { display: none; }
+  .app .ui-win__side { display: none; }
+  .app .ui-win__body { grid-template-columns: minmax(0, 1fr); }
+  .app > .app__pane + .app__pane { border-left: 0; border-top: 1px solid var(--u-line); }
+}
+@media (max-width: 639px) {
+  .app.ui { grid-template-rows: minmax(0, 1fr); }
+  .app > .app__pane--list { display: none; }
+  .app > .app__pane + .app__pane { border-top: 0; }
+}
+#steps .panel, #rules .panel { --p-h: 336px; }
+.app .ui-doc { width: 100%; padding: 32px 256px 0 32px; }
+.app .ui-doc__note { right: 32px; }
+@media (max-width: 1023px) { .app .ui-doc { padding: 24px 24px 0; } .app .ui-doc__note { display: none; } }
+#figures .stats { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) and (max-width: 1279px) { #steps { --h: 2 } }
+@media (min-width: 640px) and (max-width: 1023px) { #pricing { --h: 2 } }
+
+/* the client asked for gradient grounds: one monochrome light pool behind the hero, drawn light first */
+.hero { background:
+  radial-gradient(60% 55% at 78% 38%, var(--glow), transparent 70%),
+  radial-gradient(40% 40% at 8% 0%, color-mix(in oklab, var(--glow) 60%, transparent), transparent 75%),
+  var(--bg); }
+.hero__media { background: linear-gradient(160deg, color-mix(in oklab, var(--ink) 7%, var(--bg)), color-mix(in oklab, var(--ink) 2%, var(--bg)) 60%); }
+#report { background: radial-gradient(70% 60% at 50% 100%, var(--glow), transparent 70%), var(--bg); }
+.ground-surface { background: linear-gradient(180deg, var(--bg), color-mix(in oklab, var(--ink) 3%, var(--bg))); }
+.footer--dark { background: radial-gradient(70% 90% at 50% 0%, color-mix(in oklab, var(--ink) 9%, var(--bg)), var(--bg) 70%); }
+
+/* theme toggle */
+.theme-toggle { width: 44px; height: 44px; display: inline-grid; place-items: center; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--ink) 16%, transparent); background: transparent; color: var(--ink); cursor: pointer; transition: background-color .2s, transform .2s; }
+.theme-toggle:hover { background: color-mix(in oklab, var(--ink) 7%, transparent); }
+.theme-toggle:active { transform: scale(.94); }
+.theme-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+:root[data-theme="dark"] .theme-toggle__moon, :root:not([data-theme="dark"]) .theme-toggle__sun { display: none; }
+
+/* 3D hover, asked for by the client: the card turns toward the pointer and a light follows it.
+   Pointer devices only; still under reduced motion. */
+[data-tilt] { transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transform-style: preserve-3d; transition: transform .5s cubic-bezier(.2,.8,.2,1); will-change: transform; }
+[data-tilt].is-tilting { transition: transform .08s linear; }
+[data-tilt]::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 3; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--ink) 9%, transparent), transparent 60%); }
+[data-tilt].is-tilting::after { opacity: 1; }
+@media (prefers-reduced-motion: reduce), (hover: none) { [data-tilt] { transform: none !important; } [data-tilt]::after { display: none; } }
+@media (max-width: 639px) { #steps .panel, #rules .panel { --p-h: 220px; } }
+</style>
+</head>
+<body>
+<!-- type: software
+     deal: hero split, nav nav-mega (+ a light/dark switch, asked for by the client), close close-word, footer footer-dark (footer-statement dealt; its lit sand
+     ground fights the client's black and white, dealt again), rhythm surface-pairs, buttons pill, mark ring,
+     grounds bg-dusk #report, bg-halo #recruiters (pick.mjs), a monochrome light pool in the hero (client asked for gradients), effect none; 3D tilt on cards (client asked; waived in .taste-skill/waivers.json)
+     palette: the client's own (start.mjs brand): black and white only, a light and a dark theme
+     type: mona (Mona Sans, Geist Mono); funnel failed hero-lines, the client found the next ones generic
+     moments: counter-rolls in #figures -->
+
+<header class="nav">
+  <div class="wrap nav__bar">
+    <a class="skip-link" href="#top">Skip to content</a>
+    <a class="nav__logo" href="#top"><span class="mark" data-mark="ring" aria-hidden="true"></span>Hiremark</a>
+    <nav class="nav__links" aria-label="Main">
+      <div class="nav__item">
+        <a class="nav__link" href="#report">Product <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="nav__menu">
+          <div class="wrap grid">
+            <div class="menu-col span-3">
+              <p class="t-label">Before the call</p>
+              <a href="#steps">Resume score<span>Six checks, out of 100</span></a>
+              <a href="#steps">Setup check<span>Camera, microphone, full screen</span></a>
+            </div>
+            <div class="menu-col span-3">
+              <p class="t-label">The interview</p>
+              <a href="#interview">Live call<span>Talk, code and ask for hints</span></a>
+              <a href="#rules">Scoring rules<span>Hidden tests and a timer</span></a>
+              <a href="#report">Your report<span>Every answer, marked</span></a>
+            </div>
+            <a class="menu-card span-3 start-10" href="/leaderboard">
+              <div class="panel" data-tilt><div class="stage stage--fade-br"><div class="at-corner" style="--ax:24px;--ay:24px">
+                <div class="ui ui-panel ui-stat" data-ui="stat" data-ui-still data-from="74" data-to="82" data-suffix="">
+                  <div class="ui-stat__head"><div class="ui-stat__top"><span class="ui-stat__label">Interview score</span><span class="ui-stat__range">Attempt 2</span></div>
+                  <div class="ui-stat__line"><span class="ui-stat__num" data-stat-num>82</span><span class="ui-chip ui-chip--plain ui-stat__delta">8 pts</span></div></div>
+                </div>
+              </div></div></div>
+              <span class="t-card">Leaderboard</span>
+              <span class="t-small muted">Published results, by score</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="nav__item"><a class="nav__link" href="#recruiters">Recruiters</a></div>
+      <div class="nav__item"><a class="nav__link" href="#pricing">Pricing</a></div>
+      <div class="nav__item"><a class="nav__link" href="#faq">Questions</a></div>
+    </nav>
+    <div class="nav__actions">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" title="Switch theme">
+        <svg class="theme-toggle__sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"/></svg>
+        <svg class="theme-toggle__moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/></svg>
+      </button>
+      <a class="nav__link" href="/login">Sign in</a>
+      <a class="btn btn--primary" href="/signup">Take a free interview</a>
+    </div>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero hero--split" data-enter aria-labelledby="hero-h">
+    <div class="wrap"><div class="hero-text grid hero__grid">
+      <div class="hero__text span-5">
+        <p class="hero__kicker"><span class="dot" aria-hidden="true"></span>Your first interview is free</p>
+        <h1 id="hero-h">AI mock interviews for SDE freshers</h1>
+        <p class="hero__lead">A 40-minute interview on a live call, built from your resume: one coding problem, your own projects and core CS. You get a hire or no-hire verdict the same evening.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/signup">Take a free interview<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+          <a class="btn btn--secondary" href="#report">See a sample report</a>
+        </div>
+      </div>
+      <div class="hero__media span-6 start-7" data-tilt>
+        <div class="stage stage--fade-b"><div class="at-rise to-edge fit" style="--fit-max:440px;--ax:max(24px, 50% - 220px);--ay:56px;--ay-sm:24px" data-ui-loop>
+          <div class="ui ui-panel ui-chat" data-ui="chat">
+              <div class="ui-head"><span class="ui-agent" aria-hidden="true"></span><div class="ui-title">Diksha, interviewer</div><span class="ui-chat__online">On the call</span><span class="ui-spacer"></span></div>
+              <div class="ui-chat__body">
+                <div class="ui-chat__day">DSA, 14:02 left</div>
+                <div class="ui-msg ui-msg--me" data-chat-q><span class="ui-msg__text">Can the prices array be empty?</span></div>
+                <div class="ui-msg ui-msg--bot" data-chat-a>
+                  <span class="ui-agent ui-msg__av" aria-hidden="true"></span>
+                  <span class="ui-msg__col">
+                    <span class="ui-chat__answer">No. The statement says <b>1 ≤ n ≤ 100000</b>. Do not assume anything it does not say.</span>
+                    <span class="ui-chat__srcs"><span class="ui-chat__src"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M4 2.5h5l3 3v8H4z"/><path d="M9 2.5v3h3"/></svg>Problem statement</span><span class="ui-chat__src"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg>No hint used</span></span>
+                  </span>
+                </div>
+                <div class="ui-msg ui-msg--me"><span class="ui-msg__text">Okay, one pass with the lowest price so far.</span></div>
+              </div>
+              <div class="ui-chat__input"><span class="ui-chat__ph">Speak, or type a message</span><span class="ui-chat__send" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 13V3.5M3.8 7.5 8 3.3l4.2 4.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            </div>
+        </div></div>
+        <div class="ly-float">
+          <div class="ly-float__row"><span class="ly-live">On the call</span><span>14:02 left</span></div>
+          <div class="ly-float__title">DSA, best day to buy and sell</div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="section" id="report" aria-labelledby="report-h">
+    <div class="wrap">
+      <div class="grid">
+        <h2 class="span-5" id="report-h">Your report, question by question</h2>
+        <p class="span-6 start-7 muted">Every question you were asked, with its segment and score. Open one to see what you covered, what you missed and the answer that would have scored full marks. <a class="link" href="/signup">Get your own report</a></p>
+      </div>
+      <div class="ui app fill" role="img" aria-label="A Hiremark report: nine questions on the left, the open answer on the right with the missed point marked" data-ui-pause-host>
+        <div class="app__pane app__pane--list">
+          <div class="ui ui-panel ui-win" data-ui="window" data-open="Marking" data-work="Marking" data-done="Marked">
+            <div class="ui-win__bar">
+              <span class="ui-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="ui-win__crumb">Report <i>/</i> <b>Attempt 2</b></span>
+              <span class="ui-spacer"></span>
+              <span class="ui-win__search" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg><span class="ui-win__ph">Search</span><span class="ui-kbd">/</span></span>
+            </div>
+            <div class="ui-win__body">
+              <nav class="ui-win__side" aria-hidden="true">
+                <span class="ui-win__nav is-on">All<em>9</em></span>
+                <span class="ui-win__nav">DSA<em>3</em></span>
+                <span class="ui-win__nav">Projects<em>2</em></span>
+                <span class="ui-win__nav">Core CS<em>3</em></span>
+                <span class="ui-win__label">Report</span>
+                <span class="ui-win__nav">Transcript</span>
+                <span class="ui-win__nav">Integrity log</span>
+              </nav>
+              <div class="ui-win__main">
+                <div class="ui-win__cols" aria-hidden="true"><span>Part</span><span>Question</span><span>Status</span><span>Score</span></div>
+                <ul class="ui-win__rows">
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="1">DS</span><span class="ui-win__who">DSA</span><span class="ui-win__sub">Best day to buy and sell</span><span class="ui-win__st" data-st>Marking</span><span class="ui-win__age">21/25</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="1">DS</span><span class="ui-win__who">DSA</span><span class="ui-win__sub">Time and space complexity</span><span class="ui-win__st" data-st>Marking</span><span class="ui-win__age">6/10</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="3">PR</span><span class="ui-win__who">Projects</span><span class="ui-win__sub">Why a queue in your chat app</span><span class="ui-win__st is-you" data-st>Missed a point</span><span class="ui-win__age">5/10</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="3">PR</span><span class="ui-win__who">Projects</span><span class="ui-win__sub">What you would change now</span><span class="ui-win__st is-done" data-st>Marked</span><span class="ui-win__age">8/10</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">CS</span><span class="ui-win__who">Core CS</span><span class="ui-win__sub">Process and thread</span><span class="ui-win__st is-done" data-st>Marked</span><span class="ui-win__age">9/10</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">CS</span><span class="ui-win__who">Core CS</span><span class="ui-win__sub">How an index speeds a query</span><span class="ui-win__st is-done" data-st>Marked</span><span class="ui-win__age">7/10</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">CS</span><span class="ui-win__who">Core CS</span><span class="ui-win__sub">TCP or UDP for a video call</span><span class="ui-win__st is-done" data-st>Marked</span><span class="ui-win__age">8/10</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="2">IN</span><span class="ui-win__who">Intro</span><span class="ui-win__sub">Walk me through your resume</span><span class="ui-win__st is-done" data-st>Marked</span><span class="ui-win__age">4/5</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="5">WR</span><span class="ui-win__who">Wrap-up</span><span class="ui-win__sub">Your questions for us</span><span class="ui-win__st is-done" data-st>Marked</span><span class="ui-win__age">4/5</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="app__pane app__pane--open" data-ui-loop>
+          <div class="ui ui-doc" data-ui="doc">
+            <article class="ui-doc__page">
+              <div class="ui-doc__label">Projects, question 3 of 9</div>
+              <div class="ui-doc__title">Why did your chat app use a message queue?</div>
+              <div class="ui-doc__text">Your answer: messages from many users arrive at once, so <mark class="ui-doc__mark is-on">the queue holds them until the server is free</mark> and none are lost when traffic spikes.</div>
+              <div class="ui-doc__text">You said the queue keeps <mark class="ui-doc__mark" data-kind="Missed" data-msg="Say what happens when the worker crashes mid-message." data-where="Key point 3 of 4">messages in order</mark> for each chat room.</div>
+              <div class="ui-doc__text">Best answer: the queue absorbs bursts, keeps order per room, and lets a crashed worker pick the message up again because it is only removed after it is processed.</div>
+              <div class="ui-doc__text">Score: 5 of 10. Covered 2 of 4 key points. No hints used on this question.</div>
+            </article>
+            <aside class="ui-doc__note ui-panel is-on" aria-live="polite">
+              <div class="ui-doc__kind"><span class="ui-doc__dot"></span><span data-doc-kind>Covered</span></div>
+              <div class="ui-doc__msg" data-doc-msg>Key point 1: the queue absorbs bursts of messages.</div>
+              <div class="ui-doc__where" data-doc-where>Key point 1 of 4</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="interview" aria-labelledby="interview-h">
+    <div class="wrap">
+      <div class="grid">
+        <div class="span-5 stack-6">
+          <h2 id="interview-h">An interviewer that listens while you code</h2>
+          <p class="t-lead">Ask it to repeat a question, check what the input can be, or think aloud while you code. It answers from the problem statement and will not confirm your approach.</p>
+          <ul class="facts">
+            <li>Python, C++, Java and JavaScript in the editor</li>
+            <li>Ten interviewers, each with their own style</li>
+            <li>Questions drawn from your own projects</li>
+          </ul>
+          <a class="link" href="/signup">Take a free interview</a>
+        </div>
+        <div class="frame frame--split span-6 start-7" data-tilt>
+          <div class="stage stage--fade-br"><div class="at-corner to-edge" style="--ax:56px;--ay:56px" data-ui-loop>
+            <div class="ui ui-panel ui-code" data-ui="code">
+              <div class="ui-code__tabs"><span class="ui-code__tab is-on"><i class="ui-code__lang">PY</i>solution.py</span><span class="ui-spacer"></span><span class="ui-chip ui-chip--plain ui-code__chip" data-code-chip>2/2 samples</span></div>
+              <pre class="ui-code__pre"><code><span class="ui-code__ln" data-n="1"><span class="k">import</span> sys</span>
+<span class="ui-code__ln" data-n="2"></span>
+<span class="ui-code__ln" data-n="3"><span class="k">def</span> <span class="f">solve</span>():</span>
+<span class="ui-code__ln" data-n="4">    data = sys.stdin.<span class="f">read</span>().<span class="f">split</span>()</span>
+<span class="ui-code__ln" data-n="5">    prices = <span class="f">list</span>(<span class="f">map</span>(<span class="f">int</span>, data[<span class="n">1</span>:]))</span>
+<span class="ui-code__ln" data-n="6">    lowest, best = prices[<span class="n">0</span>], <span class="n">0</span></span>
+<span class="ui-code__ln" data-n="7">    <span class="k">for</span> p <span class="k">in</span> prices:</span>
+<span class="ui-code__ln is-mark" data-n="8">        best = <span class="f">max</span>(best, p - lowest)</span>
+<span class="ui-code__ln" data-n="9" data-note="You said: one pass, O(n) time, O(1) space.">        lowest = <span class="f">min</span>(lowest, p)</span>
+<span class="ui-code__ln" data-n="10">    <span class="f">print</span>(best)</span>
+<span class="ui-code__ln" data-n="11"></span>
+<span class="ui-code__ln" data-n="12"><span class="k">if</span> __name__ == <span class="n">"__main__"</span>:</span>
+<span class="ui-code__ln" data-n="13">    <span class="f">solve</span>()</span></code></pre>
+              <div class="ui-code__hint" data-code-hint><span class="ui-dot"></span><span data-code-text>You said: keep the lowest price seen so far.</span></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section ground-surface" id="steps" style="--hm: 2" aria-labelledby="steps-h">
+    <div class="wrap">
+      <div class="section-head"><h2 id="steps-h">Your first interview in 3 steps</h2></div>
+      <div class="grid">
+        <article class="card card--row card--open span-4">
+          <span class="step-num">1</span>
+          <h3>Score your resume</h3>
+          <p>Six fixed checks, out of 100. The interview opens at 60.</p>
+          <div class="panel" data-tilt><div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:340px;--ax:24px;--ay:40px" data-ui-loop>
+            <div class="ui ui-panel ui-checks" data-ui="checklist">
+              <div class="ui-checks__head"><div class="ui-title">Resume checks</div><span class="ui-spacer"></span><div class="ui-meta" data-checks-count>3 of 6</div></div>
+              <div class="ui-checks__bar"><i data-checks-bar style="--k:0.5"></i></div>
+              <ul class="ui-checks__list">
+                <li class="ui-check is-done"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Text a tracker can read</span></li>
+                <li class="ui-check is-done"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Contact details at the top</span></li>
+                <li class="ui-check is-done"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Skills named in projects</span></li>
+                <li class="ui-check"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Bullets start with a verb</span></li>
+                <li class="ui-check"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Results with numbers</span></li>
+                <li class="ui-check"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">One page for a fresher</span></li>
+              </ul>
+            </div>
+          </div></div></div>
+        </article>
+        <article class="card card--row card--open span-4">
+          <span class="step-num">2</span>
+          <h3>Sit the 40-minute call</h3>
+          <p>Camera and microphone on. Talk, code and ask questions out loud.</p>
+          <div class="panel" data-tilt><div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:264px;--ax:max(24px, 50% - 132px);--ay:32px">
+            <div class="ui ui-panel ui-voice" data-ui="voice">
+            <div class="ui-voice__top"><span class="ui-chip ui-chip--ink">Interview, DSA</span><span class="ui-spacer"></span><span class="ui-voice__time" data-voice-time>14:08</span></div>
+            <div class="ui-voice__orb" data-voice-orb></div>
+            <div class="ui-voice__who"><span class="ui-voice__name">Diksha</span><span class="ui-voice__with">Staff engineer, payments</span></div>
+            <div class="ui-voice__cap" data-voice-cap>From the statement, n is at least 1. Do not assume anything it does not say.</div>
+            <div class="ui-voice__bar">
+              <span class="ui-voice__btn" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 16 16"><rect x="6" y="2" width="4" height="8" rx="2"/><path d="M3.5 8a4.5 4.5 0 0 0 9 0M8 12.5V14"/></svg></span>
+              <span class="ui-voice__wave" aria-hidden="true"><i style="--h:4"></i><i style="--h:7"></i><i style="--h:12"></i><i style="--h:9"></i><i style="--h:16"></i><i style="--h:11"></i><i style="--h:20"></i><i style="--h:14"></i><i style="--h:8"></i><i style="--h:17"></i><i style="--h:12"></i><i style="--h:6"></i><i style="--h:10"></i><i style="--h:18"></i><i style="--h:13"></i><i style="--h:7"></i><i style="--h:15"></i><i style="--h:9"></i><i style="--h:5"></i><i style="--h:11"></i><i style="--h:7"></i><i style="--h:4"></i></span>
+              <span class="ui-voice__btn ui-voice__end" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M2.2 9.6c3.4-2.6 8.2-2.6 11.6 0l-1.1 1.9-2.5-.9V8.9a7.5 7.5 0 0 0-4.4 0v1.7l-2.5.9z"/></svg></span>
+            </div>
+          </div>
+          </div></div></div>
+        </article>
+        <article class="card card--row card--open span-4">
+          <span class="step-num">3</span>
+          <h3>Read your verdict</h3>
+          <p>A score, a hire or no-hire verdict and three things to fix first.</p>
+          <div class="panel" data-tilt><div class="stage stage--fade-b"><div class="at-corner" style="--ax:24px;--ay:40px">
+            <div class="ui ui-panel ui-stat" data-ui="stat" data-ui-still data-from="70" data-to="78" data-suffix="">
+              <div class="ui-stat__head">
+                <div class="ui-stat__top"><span class="ui-stat__label">Interview score</span><span class="ui-stat__range">Attempt 2</span></div>
+                <div class="ui-stat__line"><span class="ui-stat__num" data-stat-num>78</span><span class="ui-chip ui-chip--plain ui-stat__delta">8 pts</span><span class="ui-stat__sub">vs. attempt 1</span></div>
+              </div>
+              <div class="ui-stat__chart">
+                <svg class="ui-stat__svg" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="ui-stat__grid" d="M0 30.5H400M0 60.5H400M0 90.5H400"/>
+                  <path class="ui-stat__cover" fill-rule="evenodd" d=""/>
+                  <g class="ui-stat__bars"><rect rx="3" x="0" y="40" width="34" height="80"/><rect rx="3" x="45" y="62" width="34" height="58"/><rect rx="3" x="90" y="70" width="34" height="50"/><rect rx="3" x="135" y="28" width="34" height="92"/><rect rx="3" x="180" y="44" width="34" height="76"/><rect rx="3" x="225" y="36" width="34" height="84"/><rect rx="3" x="270" y="52" width="34" height="68"/><rect rx="3" x="315" y="40" width="34" height="80"/><rect rx="3" x="360" y="30" width="34" height="90"/></g>
+                </svg>
+                <div class="ui-stat__axis" aria-hidden="true"><span>Intro</span><span>Core CS</span><span>Wrap-up</span></div>
+              </div>
+            </div>
+          </div></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section ground-surface" id="rules" aria-labelledby="rules-h">
+    <div class="wrap">
+      <div class="section-head"><h2 id="rules-h">Scores kept by code. <span class="muted">The AI only asks.</span></h2></div>
+      <div class="grid">
+        <article class="card card--row card--open span-6">
+          <h3>Runs hidden tests on your code</h3>
+          <p>Run the samples, then submit against tests you never see. The timer runs on our server.</p>
+          <div class="panel" data-tilt><div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:420px;--ax:max(24px, 50% - 210px);--ay:40px" data-ui-loop>
+            <div class="ui ui-panel ui-toggles" data-ui="toggles">
+              <div class="ui-head"><div class="ui-title">Scoring rules</div><span class="ui-spacer"></span><div class="ui-meta" data-tg-count>4 of 4 on</div></div>
+              <ul class="ui-toggles__list">
+                <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Hidden tests</span><span class="ui-tg__sub">Your code, run against unseen cases</span></span><span class="ui-switch is-on" aria-hidden="true"><i></i></span></li>
+                <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Server timer</span><span class="ui-tg__sub">Every part has its own clock</span></span><span class="ui-switch is-on" aria-hidden="true"><i></i></span></li>
+                <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Hints recorded</span><span class="ui-tg__sub">Each one lowers the score of that part</span></span><span class="ui-switch is-on" aria-hidden="true"><i></i></span></li>
+                <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Key points</span><span class="ui-tg__sub">Spoken answers checked against a fixed list</span></span><span class="ui-switch is-on" aria-hidden="true"><i></i></span></li>
+              </ul>
+            </div>
+          </div></div></div>
+        </article>
+        <article class="card card--row card--open span-6">
+          <h3>Logs every warning in the open</h3>
+          <p>Pasting from outside, tab switches and leaving full screen are logged. Three warnings end the call.</p>
+          <div class="panel" data-tilt><div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:380px;--ax:max(24px, 50% - 190px);--ay:calc(100% - 180px);--ay-sm:calc(100% - 180px)">
+            <div class="ui ui-notify" data-ui="notify" data-ui-still>
+              <ul class="ui-notify__list" data-notify-list>
+                <li class="ui-note"><span class="ui-note__ico"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M8 3v6M8 11.5v.5"/></svg></span><span class="ui-note__text"><span class="ui-note__title">Paste from outside blocked<time>now</time></span><span class="ui-note__body">Warning 1 of 3, saved in your integrity log</span></span></li>
+                <li class="ui-note"><span class="ui-note__ico"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg></span><span class="ui-note__text"><span class="ui-note__title">Hint 1 recorded<time>6m</time></span><span class="ui-note__body">It lowers the DSA score</span></span></li>
+                <li class="ui-note"><span class="ui-note__ico"><svg class="ui-icon" viewBox="0 0 16 16"><path d="m3.5 8.4 2.8 2.8 6.2-6.4"/></svg></span><span class="ui-note__text"><span class="ui-note__title">One face in frame<time>9m</time></span><span class="ui-note__body">Checked in your browser, no video stored</span></span></li>
+              </ul>
+            </div>
+          </div></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section statement" id="figures" aria-labelledby="figures-h">
+    <div class="wrap">
+      <div class="grid">
+        <div class="span-6 stack-6">
+          <h2 id="figures-h">Campus hiring now tests skill first</h2>
+          <p class="t-lead muted">Coding sites check your code. Nobody asks a follow-up, pushes on complexity or asks you to explain the project on your own resume. That is the part Hiremark practises.</p>
+        </div>
+        <div class="span-5 start-8 stats" data-moment="counter-rolls">
+          <div class="stat"><p class="t-stat">86%</p><p class="t-small muted">of organisations say AI is changing how they hire graduates<sup>1</sup></p></div>
+          <div class="stat"><p class="t-stat">48%</p><p class="t-small muted">already screen candidates with AI-based tests<sup>1</sup></p></div>
+          <div class="stat"><p class="t-stat">3.3×</p><p class="t-small muted">median B.Tech pay gap, top-10 institutes against tier-3 colleges<sup>1</sup></p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-halo" id="recruiters" aria-labelledby="recruiters-h">
+    <div class="wrap">
+      <div class="grid">
+        <div class="span-5 stack-6">
+          <h2 id="recruiters-h">Freshers you can search by interview score</h2>
+          <p class="t-lead">Filter published results by score, skill, college, graduation year and city. Students approve before any contact detail is shared.</p>
+          <ul class="facts">
+            <li>Recruiter plans from ₹4,999 for 30 days</li>
+            <li>Every retake shown beside the score</li>
+          </ul>
+          <a class="link" href="/signup?role=recruiter">Create a recruiter account</a>
+        </div>
+        <div class="frame frame--split span-6 start-7" data-tilt>
+          <div class="stage stage--fade-b"><div class="at-rise to-edge fit" style="--fit-max:420px;--ax:max(24px, 50% - 210px);--ay:56px" data-ui-loop>
+            <div class="ui ui-panel ui-search" data-ui="search">
+              <div class="ui-search__field">
+                <svg class="ui-icon" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
+                <span class="ui-search__q"><span data-search-q>react, 2027, score 70+</span><i class="ui-search__caret"></i></span>
+                <kbd class="ui-search__kbd">Ctrl K</kbd>
+              </div>
+              <div class="ui-search__group">Published results</div>
+              <ul class="ui-search__list" data-search-list>
+                <li class="ui-search__row is-sel"><span class="ui-search__ico"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="6" r="2.5"/><path d="M3.5 13.5c.6-2.3 2.4-3.5 4.5-3.5s3.9 1.2 4.5 3.5"/></svg></span><span class="ui-search__t">Strong hire, 91, <b>React</b>, <b>2027</b></span><span class="ui-search__m">1 attempt</span></li>
+                <li class="ui-search__row"><span class="ui-search__ico"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="6" r="2.5"/><path d="M3.5 13.5c.6-2.3 2.4-3.5 4.5-3.5s3.9 1.2 4.5 3.5"/></svg></span><span class="ui-search__t">Hire, 82, <b>React</b> and Node, <b>2027</b></span><span class="ui-search__m">2 attempts</span></li>
+                <li class="ui-search__row"><span class="ui-search__ico"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="6" r="2.5"/><path d="M3.5 13.5c.6-2.3 2.4-3.5 4.5-3.5s3.9 1.2 4.5 3.5"/></svg></span><span class="ui-search__t">Hire, 76, <b>React</b> Native, <b>2027</b></span><span class="ui-search__m">1 attempt</span></li>
+              </ul>
+              <div class="ui-search__foot"><span><kbd>&uarr;</kbd><kbd>&darr;</kbd> to move</span><span><kbd>Enter</kbd> to request an introduction</span></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing" style="--hm: 2" aria-labelledby="pricing-h">
+    <div class="wrap">
+      <div class="section-head"><h2 id="pricing-h">Interview prices</h2><p>The first one is free for every student with a confirmed email. Packs never expire.</p></div>
+      <div class="grid">
+        <article data-tilt class="card card--plan span-4">
+          <h3>First interview</h3>
+          <p class="t-small muted">Once per student</p>
+          <p class="price"><span class="t-stat">Free</span></p>
+          <a class="btn btn--secondary btn--wide" href="/signup">Sign up with your email</a>
+          <ul class="checks"><li>Full 40-minute interview</li><li>Resume score and fixes</li><li>Complete report</li></ul>
+        </article>
+        <article data-tilt class="card card--plan span-4 is-featured">
+          <h3>Pack of three <span class="badge">For placement season</span></h3>
+          <p class="t-small muted">₹133 an interview</p>
+          <p class="price"><span class="t-stat">₹399</span></p>
+          <a class="btn btn--primary btn--wide" href="/app/billing">Buy the pack</a>
+          <ul class="checks"><li>Three interviews, no expiry</li><li>A new problem each time</li><li>Your score across attempts</li></ul>
+        </article>
+        <article data-tilt class="card card--plan span-4">
+          <h3>Single interview</h3>
+          <p class="t-small muted">Per interview</p>
+          <p class="price"><span class="t-stat">₹149</span></p>
+          <a class="btn btn--secondary btn--wide" href="/app/billing">Buy one interview</a>
+          <ul class="checks"><li>A new question set</li><li>Full report every time</li><li>Attempts shown on your result</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="grid">
+        <div class="span-5 stack-6">
+          <h2 id="faq-h">Questions</h2>
+          <p class="muted">How your data is kept is set out in full on the privacy page.</p>
+          <a class="link" href="/privacy">Read the privacy page</a>
+        </div>
+        <div class="faq span-6 start-7">
+          <div class="faq__item"><h3>Is my camera recorded?</h3><p>No. Your browser checks that one face is in frame. No video or image is uploaded. We keep the transcript, your code and the integrity log.</p></div>
+          <div class="faq__item"><h3>How is the score decided?</h3><p>By code. Hidden tests, the timer, hints and warnings are measured. Spoken answers are checked against fixed key points.</p></div>
+          <div class="faq__item"><h3>Who can see my result?</h3><p>Only you, until you publish it. Recruiters see your contact details only after you approve their request.</p></div>
+          <div class="faq__item"><h3>Can I retake the interview?</h3><p>Yes. The leaderboard shows your latest result and how many attempts you took.</p></div>
+          <div class="faq__item"><h3>What do I need?</h3><p>A laptop with Chrome, a camera, a microphone and forty quiet minutes.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer closing footer--dark ground-inverse" id="contact" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="closing__cta close--word">
+      <div class="section-head--split">
+        <div><h2 id="close-h">Sit your first interview this week</h2><p class="t-lead">Free, 40 minutes, the full report the same evening.</p></div>
+        <a class="btn btn--primary" href="/signup">Take a free interview<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+      </div>
+      <p class="close__word" aria-hidden="true">Hiremark</p>
+    </div>
+    <div class="closing__links">
+      <div class="grid">
+        <div class="span-4 stack-4">
+          <p class="footer__lede">Mock interviews for SDE freshers, marked by code, for students outside the top ten campuses.</p>
+        </div>
+        <div class="span-2 footer__col"><h3>Product</h3><ul><li><a href="#report">Report</a></li><li><a href="#interview">Interview</a></li><li><a href="#rules">Scoring</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Students</h3><ul><li><a href="/signup">Sign up</a></li><li><a href="/login">Sign in</a></li><li><a href="/leaderboard">Leaderboard</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Recruiters</h3><ul><li><a href="#recruiters">Search</a></li><li><a href="/recruiters">Why Hiremark</a></li><li><a href="/pricing">Plans</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Trust</h3><ul><li><a href="/privacy">Privacy</a></li><li><a href="#faq">Questions</a></li></ul></div>
+      </div>
+      <p class="t-small muted"><sup>1</sup> Deloitte India, Campus Workforce Trends 2026, a survey of 257 organisations.</p>
+      <div class="footer__legal">
+        <span>&copy; 2026 Hiremark &nbsp; <a href="/privacy">Privacy</a></span>
+        <div class="socials"></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/landing/assets/system.js"></script>
+<script type="module" src="/landing/assets/motion/motion.js"></script>
+<script type="module" src="/landing/assets/layout/layout.js"></script>
+<script>
+(function () {
+  var html = document.documentElement, btn = document.querySelector('[data-theme-toggle]');
+  function label() { btn.setAttribute('aria-label', html.dataset.theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'); }
+  label();
+  btn.addEventListener('click', function () {
+    var t = html.dataset.theme === 'dark' ? 'light' : 'dark';
+    html.dataset.theme = t; html.dataset.tone = t; label();
+    try { localStorage.setItem('hm-theme', t); } catch (e) {}
+  });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(hover: hover)').matches) return;
+  document.querySelectorAll('[data-tilt]').forEach(function (el) {
+    var max = el.classList.contains('hero__media') || el.classList.contains('frame') ? 4 : 7;
+    el.addEventListener('pointermove', function (e) {
+      var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      el.classList.add('is-tilting');
+      el.style.setProperty('--ry', ((x - 0.5) * max).toFixed(2) + 'deg');
+      el.style.setProperty('--rx', ((0.5 - y) * max).toFixed(2) + 'deg');
+      el.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+      el.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+    });
+    el.addEventListener('pointerleave', function () { el.classList.remove('is-tilting'); el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); });
+  });
+})();
+</script>
+</body>
+</html>

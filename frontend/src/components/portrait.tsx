@@ -1,0 +1,113 @@
+"use client";
+// Interviewer portraits are drawn in code: no image files, no third-party avatar service.
+export type Interviewer = { id: string; name: string; title: string; style: string; pitch: number; rate: number; voice: string; hue: number };
+
+// Hair is drawn in two layers: a back shape behind the head and a front shape over the forehead.
+const HAIR = {
+  short: { back: "M64 80c-3-34 13-54 36-54s39 20 36 54c-2-8-5-14-8-18-16-4-40-4-56 0-3 4-6 10-8 18z", front: "M66 70c2-26 16-40 34-40 20 0 34 14 34 40-6-14-14-22-22-26-12 6-32 8-46 26z" },
+  crop: { back: "M65 76c-3-30 13-48 35-48s38 18 35 48c-3-8-6-13-10-16-14-3-36-3-50 0-4 3-7 8-10 16z", front: "M68 66c4-22 16-32 32-32s28 10 32 32c-8-10-18-16-32-16s-24 6-32 16z" },
+  side: { back: "M64 80c-4-34 12-56 37-56 26 0 40 22 35 56-2-9-5-15-9-19-16-4-38-4-54 0-4 4-7 10-9 19z", front: "M66 72c0-28 16-42 36-42 18 0 30 12 32 36-10-14-22-20-34-22-8 10-22 18-34 28z" },
+  long: { back: "M54 150c-12-60-4-126 46-126s58 66 46 126c-8 4-20 6-28 4 4-30 4-60-18-76-22 16-22 46-18 76-8 2-20 0-28-4z", front: "M64 76c0-30 16-46 36-46s36 16 36 46c-6-16-16-26-30-30-12 10-28 16-42 30z" },
+  bob: { back: "M56 118c-10-48 2-94 44-94s54 46 44 94c-6 2-14 2-20 0 4-22 2-44-24-56-26 12-28 34-24 56-6 2-14 2-20 0z", front: "M64 74c2-28 16-44 36-44s34 16 36 44c-10-14-20-22-36-24-16 2-26 10-36 24z" },
+  bun: { back: "M60 96c-8-44 10-70 40-70s48 26 40 70c-2-14-8-26-14-34-18 4-36 2-52-8-6 10-12 26-14 42z M86 22a14 12 0 1 1 28 0 14 12 0 1 1-28 0z", front: "M66 72c2-26 16-40 34-40s32 14 34 40c-8-14-20-22-34-22s-26 8-34 22z" },
+};
+const SKIN: [string, string, string][] = [
+  ["#f0c6a2", "#d9a37c", "#b87d5a"], ["#dcab84", "#c18a62", "#9c6845"], ["#c99168", "#ab734c", "#85542f"],
+  ["#f3d2b6", "#e0b08e", "#bf8a68"], ["#b98259", "#99653f", "#734827"],
+];
+const HAIR_COLORS: [string, string][] = [["#1d1a19", "#3a3432"], ["#241c17", "#46382e"], ["#15151a", "#2f2f3a"], ["#2e221b", "#523f33"]];
+
+type Props = { person: Interviewer; size?: number; speaking?: boolean; level?: number; scene?: boolean; className?: string };
+
+/** `scene` draws a wide video-call frame with a softly blurred room; otherwise a round head-and-shoulders crop. */
+export function Portrait({ person, size = 96, speaking = false, level = 0, scene = false, className }: Props) {
+  const seed = person.id.split("").reduce((a, c) => a * 31 + c.charCodeAt(0), 7) >>> 0;
+  const female = person.voice === "female";
+  const styles = female ? (["long", "bob", "bun"] as const) : (["short", "crop", "side"] as const);
+  const hair = HAIR[styles[seed % 3]];
+  const [skin, skinMid, skinShade] = SKIN[(seed >>> 3) % SKIN.length];
+  const [hairDark, hairLight] = HAIR_COLORS[(seed >>> 5) % HAIR_COLORS.length];
+  const cloth = `hsl(${person.hue} 18% ${female ? 30 : 22}%)`;
+  const clothLight = `hsl(${person.hue} 18% ${female ? 40 : 31}%)`;
+  const glasses = (seed >>> 7) % 4 === 0;
+  const beard = !female && (seed >>> 9) % 2 === 0;
+  const u = person.id + (scene ? "s" : "r");
+  const open = speaking ? 1 + level * 5.5 : 0;
+  const view = scene ? "0 0 320 200" : "40 14 120 120";
+
+  return (
+    <svg viewBox={view} width={scene ? undefined : size} height={scene ? undefined : size} preserveAspectRatio="xMidYMid slice" role="img"
+      aria-label={`${person.name}, ${person.title}`} className={(scene ? "h-full w-full " : "shrink-0 rounded-full ") + (className || "")}>
+      <defs>
+        <radialGradient id={`bg-${u}`} cx="50%" cy="35%" r="80%"><stop offset="0" stopColor={`hsl(${person.hue} 16% 30%)`} /><stop offset="1" stopColor={`hsl(${person.hue} 20% 11%)`} /></radialGradient>
+        <radialGradient id={`sk-${u}`} cx="42%" cy="36%" r="75%"><stop offset="0" stopColor={skin} /><stop offset="0.7" stopColor={skinMid} /><stop offset="1" stopColor={skinShade} /></radialGradient>
+        <linearGradient id={`hr-${u}`} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor={hairLight} /><stop offset="0.6" stopColor={hairDark} /></linearGradient>
+        <linearGradient id={`cl-${u}`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor={clothLight} /><stop offset="1" stopColor={cloth} /></linearGradient>
+        <filter id={`blur-${u}`}><feGaussianBlur stdDeviation="5" /></filter>
+        <filter id={`soft-${u}`}><feGaussianBlur stdDeviation="1.6" /></filter>
+        <style>{`@keyframes blink-${u}{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}@keyframes sway-${u}{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(.6px,.8px) rotate(.5deg)}}
+          .eye-${u}{animation:blink-${u} ${4.2 + (seed % 5) * 0.4}s infinite;transform-box:fill-box;transform-origin:center}.head-${u}{animation:sway-${u} 6s ease-in-out infinite;transform-origin:100px 150px}
+          @media (prefers-reduced-motion:reduce){.eye-${u},.head-${u}{animation:none}}`}</style>
+      </defs>
+
+      <rect x="-60" y="0" width="440" height="200" fill={`url(#bg-${u})`} />
+      {scene && (
+        <g filter={`url(#blur-${u})`} opacity="0.55">
+          {/* an out-of-focus room: shelf, frames, a lamp */}
+          <rect x="6" y="20" width="74" height="5" fill="#00000055" /><rect x="6" y="62" width="74" height="5" fill="#00000055" />
+          {[0, 1, 2, 3, 4, 5].map((i) => <rect key={i} x={10 + i * 11} y={30 + (i % 2) * 4} width="8" height={32 - (i % 2) * 4} fill={`hsl(${(person.hue + i * 47) % 360} 25% ${28 + (i % 3) * 8}%)`} />)}
+          <rect x="236" y="26" width="52" height="38" fill="#ffffff14" stroke="#00000066" strokeWidth="3" />
+          <circle cx="292" cy="104" r="16" fill="#ffd9a033" /><rect x="290" y="118" width="4" height="60" fill="#00000055" />
+          <rect x="-10" y="150" width="340" height="60" fill="#00000033" />
+        </g>
+      )}
+
+      <g className={`head-${u}`} transform={scene ? "translate(60 14)" : undefined}>
+        {/* shoulders and clothing */}
+        <path d="M22 214c2-44 22-60 52-66l26 14 26-14c30 6 50 22 52 66z" fill={`url(#cl-${u})`} />
+        {female
+          ? <path d="M78 148l22 22 22-22-8-4-14 12-14-12z" fill={skinMid} />
+          : <><path d="M80 146l20 22 20-22-6-4-14 14-14-14z" fill="#e8e6e0" /><path d="M74 148l14 30 12-12-18-22zM126 148l-14 30-12-12 18-22z" fill={clothLight} /></>}
+        <path d="M22 214c2-44 22-60 52-66" fill="none" stroke="#ffffff18" strokeWidth="1.5" />
+        {/* neck */}
+        <path d="M86 118h28v30c-8 10-20 10-28 0z" fill={skinMid} />
+        <path d="M86 126c8 8 20 8 28 0v8c-8 8-20 8-28 0z" fill="#00000030" filter={`url(#soft-${u})`} />
+        <path d={hair.back} fill={`url(#hr-${u})`} fillRule="evenodd" />
+        {/* ears */}
+        <ellipse cx="64" cy="88" rx="5" ry="9" fill={skinMid} /><ellipse cx="136" cy="88" rx="5" ry="9" fill={skinMid} />
+        {/* face */}
+        <path d={female ? "M66 78c0-28 14-44 34-44s34 16 34 44c0 26-12 50-34 50s-34-24-34-50z" : "M65 78c0-28 15-44 35-44s35 16 35 44c0 20-6 36-16 44-6 5-12 7-19 7s-13-2-19-7c-10-8-16-24-16-44z"} fill={`url(#sk-${u})`} />
+        <path d="M70 100c6 18 16 28 30 28s24-10 30-28c-2 22-14 34-30 34s-28-12-30-34z" fill="#00000018" />
+        {/* men: a beard (full or short stubble) and a moustache */}
+        {!female && <path d="M66 88c1 24 10 38 20 44 4 2 9 3 14 3s10-1 14-3c10-6 19-20 20-44-3 10-7 16-12 19-5-6-13-9-22-9s-17 3-22 9c-5-3-9-9-12-19z" fill={hairDark} opacity={beard ? 0.92 : 0.4} />}
+        {!female && <path d="M87 109c4-4 9-5 13-3 4-2 9-1 13 3-4 1-9 1-13 0-4 1-9 1-13 0z" fill={hairDark} opacity={beard ? 0.95 : 0.6} />}
+        <ellipse cx="80" cy="104" rx="8" ry="5" fill="#e0705a" opacity="0.12" /><ellipse cx="120" cy="104" rx="8" ry="5" fill="#e0705a" opacity="0.12" />
+        {/* brows */}
+        <path d="M74 74q9-5 18-1" stroke={hairDark} strokeWidth={female ? 2.2 : 3} fill="none" strokeLinecap="round" />
+        <path d="M108 73q9-4 18 1" stroke={hairDark} strokeWidth={female ? 2.2 : 3} fill="none" strokeLinecap="round" />
+        {/* eyes */}
+        {[83, 117].map((x) => (
+          <g key={x} className={`eye-${u}`}>
+            <ellipse cx={x} cy="85" rx="6.4" ry="3.9" fill="#f6f2ec" />
+            <circle cx={x} cy="85" r="3.3" fill="#3b2a20" /><circle cx={x} cy="85" r="1.5" fill="#0d0a08" /><circle cx={x + 1.2} cy="83.8" r="0.9" fill="#fff" />
+            <path d={`M${x - 6.6} 84q6.6-5.4 13.2 0`} stroke="#2a1d16" strokeWidth="1.3" fill="none" strokeLinecap="round" />
+          </g>
+        ))}
+        {glasses && <g fill="none" stroke="#17171a" strokeWidth="1.8"><rect x="72" y="77" width="22" height="16" rx="6" /><rect x="106" y="77" width="22" height="16" rx="6" /><path d="M94 84h12M72 83l-7-2M128 83l7-2" /></g>}
+        {/* nose */}
+        <path d="M100 84c-1 8-4 14-5 18 2 3 8 3 10 0" stroke={skinShade} strokeWidth="1.5" fill="none" strokeLinecap="round" opacity="0.8" />
+        {/* mouth */}
+        {open > 0.5 ? (
+          <g>
+            <ellipse cx="100" cy={113 + open * 0.3} rx={8.5 - Math.min(1, level) * 1.5} ry={open} fill="#4a1d1a" />
+            <rect x="94.5" y={113 + open * 0.3 - open} width="11" height={Math.min(2.2, open * 0.6)} rx="1" fill="#f4efe9" />
+            <path d={`M90 112q10-${3 + open * 0.3} 20 0`} stroke={female ? "#b5544d" : "#9a5a4c"} strokeWidth="2" fill="none" strokeLinecap="round" />
+          </g>
+        ) : (
+          <><path d="M90 112q10 5 20 0" stroke={female ? "#b5544d" : "#9a5a4c"} strokeWidth="2.4" fill="none" strokeLinecap="round" /><path d="M94 116q6 2 12 0" stroke="#00000022" strokeWidth="1.5" fill="none" strokeLinecap="round" /></>
+        )}
+        <path d={hair.front} fill={`url(#hr-${u})`} />
+      </g>
+    </svg>
+  );
+}
